@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="37">
+ <tileset firstgid="1" source="industrial-sprite-sheet-DeadEnd-LMZ.tsx"/>
+ <layer id="1" name="Graphics" width="16" height="16">
+  <data encoding="base64" compression="zlib">
+   eJy10rkKwkAUheEp1KCFaGFnCEreyrVz7dwiaCnoawm+l78wg8PlOmREi69ITg7hwK0YY2qRquhYCTIrRd+qo4HcPqfed4no9xQu1zKtP8YEU6U/wBCjQH+JFdZKf4Y5FoH+HgcUSn+DLXaB/j/3yyx2v8xi98vsl/ubRr9Rl2tZW/y/63F3+sDdvO/al4n+ESecvfdlvfoXXHH7ot/6sLGsJ/6LJIE=
+  </data>
+ </layer>
+ <layer id="4" name="Foreground" width="16" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2D4ATYoHgX4AQARyAAN
+  </data>
+ </layer>
+ <objectgroup id="2" name="Collision">
+  <object id="18" x="0" y="0.830339" width="16" height="239.17"/>
+  <object id="20" x="0" y="240" width="256" height="16"/>
+  <object id="21" x="128" y="176" width="96" height="24"/>
+  <object id="22" x="16" y="176" width="80" height="24"/>
+  <object id="23" x="208" y="0" width="16" height="176"/>
+  <object id="24" x="15.9681" y="0" width="192.032" height="24"/>
+  <object id="31" x="32" y="48" width="48" height="40"/>
+  <object id="32" x="144" y="48" width="48" height="40"/>
+  <object id="33" x="32" y="112" width="48" height="40"/>
+  <object id="34" x="144" y="112" width="48" height="40"/>
+  <object id="35" x="16" y="208" width="48" height="32"/>
+ </objectgroup>
+ <layer id="3" name="Background" width="16" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUjFQAAAQAAAE=
+  </data>
+ </layer>
+</map>
