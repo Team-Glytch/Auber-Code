@@ -20,7 +20,10 @@ public class AuberGame extends Game {
 	 */
 	Player player;
 	World world;
-
+	
+	/*
+	 * Initialise world
+	 */
 	@Override
 	public void create() {
 		world = new World(new Vector2(0, 0), true);
@@ -34,7 +37,10 @@ public class AuberGame extends Game {
 		mainScreen.setFocusedRenderable(this.player);
 		renderer.setScreen(mainScreen);
 	}
-
+	
+	/*
+	 * Updates screen with movement
+	 */
 	@Override
 	public void render() {
 		if (this.getScreen() == null || renderer.getCurrentScreen().equals(this.getScreen())) {
@@ -46,13 +52,11 @@ public class AuberGame extends Game {
 
 		renderer.render();
 	}
-
-	@Override
-	public void dispose() {
-		world.dispose();
-		renderer.dispose();
-	}
-
+	
+	
+	/*
+	 * Key mapping and speed changes
+	 */
 	private void handleKeys() {
 		boolean moveUp = (Gdx.input.isKeyPressed(Input.Keys.UP));
 		boolean moveDown = (Gdx.input.isKeyPressed(Input.Keys.DOWN));
@@ -82,6 +86,15 @@ public class AuberGame extends Game {
 
 		player.box2dBody.setLinearVelocity(velX, velY);
 
+	}
+	
+	/*
+	 * Cleaning up
+	 */
+	@Override
+	public void dispose() {
+		world.dispose();
+		renderer.dispose();
 	}
 
 }
