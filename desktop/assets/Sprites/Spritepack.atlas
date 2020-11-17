@@ -1,0 +1,47 @@
+
+Spritepack.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+enemyRun
+  rotate: false
+  xy: 1, 1
+  size: 114, 25
+  orig: 114, 25
+  offset: 0, 0
+  index: -1
+playerRun
+  rotate: false
+  xy: 117, 1
+  size: 114, 25
+  orig: 114, 25
+  offset: 0, 0
+  index: -1
+enemyIdle
+  rotate: false
+  xy: 233, 1
+  size: 76, 25
+  orig: 76, 25
+  offset: 0, 0
+  index: -1
+playerIdle
+  rotate: false
+  xy: 311, 1
+  size: 76, 25
+  orig: 76, 25
+  offset: 0, 0
+  index: -1
+enemyHurt
+  rotate: false
+  xy: 389, 1
+  size: 38, 25
+  orig: 38, 25
+  offset: 0, 0
+  index: -1
+playerHurt
+  rotate: false
+  xy: 429, 1
+  size: 38, 25
+  orig: 38, 25
+  offset: 0, 0
+  index: -1
