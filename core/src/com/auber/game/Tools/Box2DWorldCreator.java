@@ -1,5 +1,7 @@
-package com.davidalexanderkelly.game.Tools;
+package com.auber.game.Tools;
 
+import com.auber.game.SpaceGamePrototype;
+import com.auber.game.Screens.PlayScreen;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -9,8 +11,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.davidalexanderkelly.game.SpaceGamePrototype;
-import com.davidalexanderkelly.game.Screens.PlayScreen;
 
 public class Box2DWorldCreator {
 	public Box2DWorldCreator(PlayScreen screen) {

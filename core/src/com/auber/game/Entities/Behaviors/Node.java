@@ -1,4 +1,4 @@
-package com.davidalexanderkelly.game.Entities.Behaviors;
+package com.auber.game.Entities.Behaviors;
 
 import com.badlogic.gdx.math.Vector2;
 

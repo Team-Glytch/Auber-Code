@@ -1,6 +1,6 @@
-package com.davidalexanderkelly.game.Tools;
+package com.auber.game.Tools;
 
-import com.davidalexanderkelly.game.Entities.Enemy;
+import com.auber.game.Entities.Enemy;
 
 public class EnemyUpdater extends Thread {
 	

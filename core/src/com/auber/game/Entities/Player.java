@@ -1,5 +1,7 @@
-package com.davidalexanderkelly.game.Entities;
+package com.auber.game.Entities;
 
+import com.auber.game.SpaceGamePrototype;
+import com.auber.game.Screens.PlayScreen;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -9,8 +11,6 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.davidalexanderkelly.game.SpaceGamePrototype;
-import com.davidalexanderkelly.game.Screens.PlayScreen;
 
 public class Player extends Sprite{
 	public enum State{IDLE,RUNNING};

@@ -1,9 +1,15 @@
-package com.davidalexanderkelly.game.Entities;
+package com.auber.game.Entities;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.auber.game.SpaceGamePrototype;
+import com.auber.game.Entities.Behaviors.Node;
+import com.auber.game.Entities.Behaviors.Pathfinding;
+import com.auber.game.Screens.PlayScreen;
+import com.auber.game.Tools.InteractableWorldCreator;
+import com.auber.game.Tools.PathfindingWorldCreator;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -14,12 +20,6 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.davidalexanderkelly.game.SpaceGamePrototype;
-import com.davidalexanderkelly.game.Entities.Behaviors.Node;
-import com.davidalexanderkelly.game.Entities.Behaviors.Pathfinding;
-import com.davidalexanderkelly.game.Screens.PlayScreen;
-import com.davidalexanderkelly.game.Tools.InteractableWorldCreator;
-import com.davidalexanderkelly.game.Tools.PathfindingWorldCreator;
 
 public class Enemy extends Sprite{
 	public enum State{IDLE,RUNNING};

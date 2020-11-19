@@ -1,4 +1,4 @@
-package com.davidalexanderkelly.game.Screens;
+package com.auber.game.Screens;
 
 
 
@@ -6,6 +6,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
+import com.auber.game.SpaceGamePrototype;
+import com.auber.game.Entities.Enemy;
+import com.auber.game.Entities.Player;
+import com.auber.game.Entities.Behaviors.Node;
+import com.auber.game.Entities.Behaviors.Pathfinding;
+import com.auber.game.Scenes.Hud;
+import com.auber.game.Tools.Assets;
+import com.auber.game.Tools.Box2DWorldCreator;
+import com.auber.game.Tools.EnemyUpdater;
+import com.auber.game.Tools.InteractableWorldCreator;
+import com.auber.game.Tools.PathfindingWorldCreator;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -33,17 +44,6 @@ import com.badlogic.gdx.utils.Timer.Task;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.davidalexanderkelly.game.SpaceGamePrototype;
-import com.davidalexanderkelly.game.Entities.Enemy;
-import com.davidalexanderkelly.game.Entities.Player;
-import com.davidalexanderkelly.game.Entities.Behaviors.Node;
-import com.davidalexanderkelly.game.Entities.Behaviors.Pathfinding;
-import com.davidalexanderkelly.game.Scenes.Hud;
-import com.davidalexanderkelly.game.Tools.Assets;
-import com.davidalexanderkelly.game.Tools.Box2DWorldCreator;
-import com.davidalexanderkelly.game.Tools.InteractableWorldCreator;
-import com.davidalexanderkelly.game.Tools.PathfindingWorldCreator;
-import com.davidalexanderkelly.game.Tools.EnemyUpdater;
 
 public class PlayScreen implements Screen {
 	//Reference to Game, used to set screen

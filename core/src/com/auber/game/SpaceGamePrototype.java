@@ -1,14 +1,14 @@
-package com.davidalexanderkelly.game;
+package com.auber.game;
 
 
 
+import com.auber.game.Screens.PlayScreen;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.davidalexanderkelly.game.Screens.PlayScreen;
 
 public class SpaceGamePrototype extends Game {
 	
