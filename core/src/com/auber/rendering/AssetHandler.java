@@ -26,7 +26,8 @@ public class AssetHandler {
 	private Map<String, TextureRegion[]> textureMap;
 
 	/**
-	 * The storage of the maps in the games that can be retrieved using the map's name
+	 * The storage of the maps in the games that can be retrieved using the map's
+	 * name
 	 */
 	private Map<String, TiledMap> mapMap;
 
@@ -49,13 +50,13 @@ public class AssetHandler {
 		File file = new File(mapsLocation);
 
 		TmxMapLoader mapLoader = new TmxMapLoader();
-		
+
 		for (String childPath : file.list()) {
 			if (childPath.contains(".tmx")) {
 				mapMap.put(childPath.replace(".tmx", ""), mapLoader.load(mapsLocation + childPath));
 			}
 		}
-		
+
 	}
 
 	/**
@@ -68,7 +69,9 @@ public class AssetHandler {
 		File file = new File(texturesLocation);
 
 		for (String childPath : file.list()) {
-			textureMap.put(childPath.replace(".png", ""), loadTexture(texturesLocation + childPath));
+			if (childPath.contains(".png")) {
+				textureMap.put(childPath.replace(".png", ""), loadTexture(texturesLocation + childPath));
+			}
 		}
 
 	}

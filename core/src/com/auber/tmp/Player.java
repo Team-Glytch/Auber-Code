@@ -1,9 +1,11 @@
 package com.auber.tmp;
 
+import com.auber.game.AuberGame;
 import com.auber.rendering.Renderable;
-import com.auber.rendering.Renderer;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 
 public class Player implements Renderable {
@@ -30,10 +32,17 @@ public class Player implements Renderable {
 	 */
 	private Body definePlayer() {
 		BodyDef bodyDefinition = new BodyDef();
-		bodyDefinition.position.set(780 / Renderer.PixelsPerMetre, 1250 / Renderer.PixelsPerMetre);
+		bodyDefinition.position.set(780 / AuberGame.PixelsPerMetre, 1250 / AuberGame.PixelsPerMetre);
 		bodyDefinition.type = BodyDef.BodyType.DynamicBody;
 
 		Body box2dBody = world.createBody(bodyDefinition);
+		FixtureDef fixtureDefinition = new FixtureDef();
+		CircleShape shape = new CircleShape();
+		shape.setRadius(5 / AuberGame.PixelsPerMetre);
+
+		fixtureDefinition.shape = shape;
+
+		box2dBody.createFixture(fixtureDefinition);
 
 		return box2dBody;
 	}
@@ -57,12 +66,12 @@ public class Player implements Renderable {
 
 	@Override
 	public float getWidth() {
-		return (32f / Renderer.PixelsPerMetre);
+		return (32f / AuberGame.PixelsPerMetre);
 	}
 
 	@Override
 	public float getHeight() {
-		return (32f / Renderer.PixelsPerMetre);
+		return (32f / AuberGame.PixelsPerMetre);
 	}
 
 	@Override

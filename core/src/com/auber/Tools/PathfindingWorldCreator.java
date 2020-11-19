@@ -1,17 +1,16 @@
-package com.auber.game.Tools;
-
-import com.auber.game.AuberGame;
-import com.auber.game.Entities.Behaviors.Node;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector;
-import com.badlogic.gdx.math.Vector2;
+package com.auber.Tools;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.auber.Entities.Behaviors.Node;
+import com.auber.game.AuberGame;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 
 
 

@@ -15,12 +15,16 @@ public class AuberGame extends Game {
 	 */
 	private Renderer renderer;
 
+	public static final float PixelsPerMetre = 100;
+	public static final float V_WIDTH = 720;
+	public static final float V_HEIGHT = 720;
+
 	/*
 	 * Used mainly for testing, will be cleaned up
 	 */
 	Player player;
 	World world;
-	
+
 	/**
 	 * Initialise world
 	 */
@@ -33,11 +37,11 @@ public class AuberGame extends Game {
 		renderer.addTextures("assets/Sprites/");
 		renderer.addMaps("assets/Maps/");
 
-		GameScreen mainScreen = new GameScreen("SpaceStation");
+		GameScreen mainScreen = new GameScreen("SpaceStation", world);
 		mainScreen.setFocusedRenderable(this.player);
 		renderer.setScreen(mainScreen);
 	}
-	
+
 	/**
 	 * Updates screen with movement
 	 */
@@ -52,8 +56,7 @@ public class AuberGame extends Game {
 
 		renderer.render();
 	}
-	
-	
+
 	/**
 	 * Key mapping and speed changes
 	 */
@@ -62,32 +65,25 @@ public class AuberGame extends Game {
 		boolean moveDown = (Gdx.input.isKeyPressed(Input.Keys.DOWN));
 		boolean moveRight = (Gdx.input.isKeyPressed(Input.Keys.RIGHT));
 		boolean moveLeft = (Gdx.input.isKeyPressed(Input.Keys.LEFT));
-
-		float velX = 0;
-		float velY = 0;
-
-		float speed = 1;
-
-		if (moveUp) {
-			velY += speed;
+		
+		if (moveUp && player.box2dBody.getLinearVelocity().y < 0.7f && !moveDown) {
+			player.box2dBody.applyLinearImpulse(new Vector2(0f, 0.15f), player.box2dBody.getWorldCenter(), true);
+		} else if (moveDown && player.box2dBody.getLinearVelocity().y > -0.7f && !moveUp) {
+			player.box2dBody.applyLinearImpulse(new Vector2(0f, -0.15f), player.box2dBody.getWorldCenter(), true);
+		} else if (moveUp == moveDown) {
+			player.box2dBody.setLinearVelocity(player.box2dBody.getLinearVelocity().x, 0f);
 		}
 
-		if (moveDown) {
-			velY -= speed;
+		if (moveRight && player.box2dBody.getLinearVelocity().x < 0.7f && !moveLeft) {
+			player.box2dBody.applyLinearImpulse(new Vector2(0.15f, 0f), player.box2dBody.getWorldCenter(), true);
+		} else if (moveLeft && player.box2dBody.getLinearVelocity().x > -0.7f && !moveRight) {
+			player.box2dBody.applyLinearImpulse(new Vector2(-0.15f, 0f), player.box2dBody.getWorldCenter(), true);
+		} else if (moveRight == moveLeft) {
+			player.box2dBody.setLinearVelocity(0f, player.box2dBody.getLinearVelocity().y);
 		}
-
-		if (moveLeft) {
-			velX -= speed;
-		}
-
-		if (moveRight) {
-			velX += speed;
-		}
-
-		player.box2dBody.setLinearVelocity(velX, velY);
 
 	}
-	
+
 	/**
 	 * Cleaning up
 	 */
@@ -96,6 +92,4 @@ public class AuberGame extends Game {
 		world.dispose();
 		renderer.dispose();
 	}
-}
-
 }

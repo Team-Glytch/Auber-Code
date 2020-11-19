@@ -1,7 +1,7 @@
-package com.auber.game.Entities;
+package com.auber.Entities;
 
+import com.auber.Screens.PlayScreen;
 import com.auber.game.AuberGame;
-import com.auber.game.Screens.PlayScreen;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;

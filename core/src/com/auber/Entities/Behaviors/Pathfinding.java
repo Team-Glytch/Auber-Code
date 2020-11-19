@@ -1,14 +1,11 @@
-package com.auber.game.Entities.Behaviors;
+package com.auber.Entities.Behaviors;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 
-import com.auber.game.Screens.PlayScreen;
-import com.auber.game.Tools.PathfindingWorldCreator;
-import com.badlogic.gdx.math.Vector2;
+import com.auber.Tools.PathfindingWorldCreator;
 
 public class Pathfinding {
 	

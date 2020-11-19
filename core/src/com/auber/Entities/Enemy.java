@@ -1,19 +1,17 @@
-package com.auber.game.Entities;
+package com.auber.Entities;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.auber.Entities.Behaviors.Node;
+import com.auber.Entities.Behaviors.Pathfinding;
+import com.auber.Screens.PlayScreen;
+import com.auber.Tools.InteractableWorldCreator;
 import com.auber.game.AuberGame;
-import com.auber.game.Entities.Behaviors.Node;
-import com.auber.game.Entities.Behaviors.Pathfinding;
-import com.auber.game.Screens.PlayScreen;
-import com.auber.game.Tools.InteractableWorldCreator;
-import com.auber.game.Tools.PathfindingWorldCreator;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;

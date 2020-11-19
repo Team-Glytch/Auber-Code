@@ -3,8 +3,10 @@ package com.auber.rendering;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.auber.game.AuberGame;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -14,6 +16,8 @@ public class GameScreen implements Screen {
 	 * The name of the map
 	 */
 	private String mapName;
+	
+	private World world;
 
 	/**
 	 * The camera in the map
@@ -35,9 +39,11 @@ public class GameScreen implements Screen {
 	 */
 	private List<Renderable> renderables;
 
-	public GameScreen(String mapName) {
+	public GameScreen(String mapName, World world) {
 		this.mapName = mapName;
 		this.renderables = new ArrayList<Renderable>();
+		
+		this.world = world;
 		camera = setupCamera();
 
 		this.focusedRenderableIndex = -1;
@@ -48,7 +54,8 @@ public class GameScreen implements Screen {
 	 */
 	private OrthographicCamera setupCamera() {
 		OrthographicCamera camera = new OrthographicCamera();
-		gamePort = new FitViewport(720 / Renderer.PixelsPerMetre, 720 / Renderer.PixelsPerMetre, camera);
+		gamePort = new FitViewport(AuberGame.V_WIDTH / AuberGame.PixelsPerMetre,
+				AuberGame.V_HEIGHT / AuberGame.PixelsPerMetre, camera);
 
 		camera.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 		camera.zoom = 0.2f;
@@ -98,6 +105,10 @@ public class GameScreen implements Screen {
 	 */
 	public String getMapName() {
 		return mapName;
+	}
+	
+	public World getWorld() {
+		return world;
 	}
 
 	@Override

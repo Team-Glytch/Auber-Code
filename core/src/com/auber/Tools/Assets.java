@@ -1,4 +1,4 @@
-package com.auber.game.Tools;
+package com.auber.Tools;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
@@ -9,10 +9,10 @@ public class Assets {
 	
 	public void load() {
 		if(manager == null) {
-			manager = new AssetManager();
+			//manager = new AssetManager();
 		}
-		manager.load("assets/Sprites/Spritepack.atlas", TextureAtlas.class);
-		manager.load("assets/Sounds/stepSound.wav",  Sound.class);
+		//manager.load("assets/Sprites/Spritepack.atlas", TextureAtlas.class);
+		//manager.load("assets/Sounds/stepSound.wav",  Sound.class);
 	}
 	
 }

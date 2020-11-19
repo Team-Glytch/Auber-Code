@@ -1,48 +1,35 @@
-package com.auber.game.Screens;
+package com.auber.Screens;
 
 
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
 
+import com.auber.Entities.Enemy;
+import com.auber.Entities.Player;
+import com.auber.Entities.Behaviors.Node;
+import com.auber.Scenes.Hud;
+import com.auber.Tools.Assets;
+import com.auber.Tools.Box2DWorldCreator;
+import com.auber.Tools.EnemyUpdater;
+import com.auber.Tools.InteractableWorldCreator;
+import com.auber.Tools.PathfindingWorldCreator;
 import com.auber.game.AuberGame;
-import com.auber.game.Entities.Enemy;
-import com.auber.game.Entities.Player;
-import com.auber.game.Entities.Behaviors.Node;
-import com.auber.game.Entities.Behaviors.Pathfinding;
-import com.auber.game.Scenes.Hud;
-import com.auber.game.Tools.Assets;
-import com.auber.game.Tools.Box2DWorldCreator;
-import com.auber.game.Tools.EnemyUpdater;
-import com.auber.game.Tools.InteractableWorldCreator;
-import com.auber.game.Tools.PathfindingWorldCreator;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.utils.Timer.Task;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class PlayScreen implements Screen {
@@ -91,7 +78,7 @@ public class PlayScreen implements Screen {
 		//create a FitViewport to maintain virtual aspect ratio despite screen size
 		gamePort = new ExtendViewport(AuberGame.V_WIDTH / AuberGame.PixelsPerMetre, AuberGame.V_HEIGHT / AuberGame.PixelsPerMetre, gamecam);
 		
-		hud = new Hud(game.batch);
+		//hud = new Hud(game.batch);
 		
 		//Load the map and setup its renderer
 		maploader = new TmxMapLoader();
@@ -116,7 +103,7 @@ public class PlayScreen implements Screen {
 		//allows the rendering of collision boxes
 		collisionRenderer = new Box2DDebugRenderer();
 		
-		new Box2DWorldCreator(this);
+		//new Box2DWorldCreator(this);
 		
 		batch = new SpriteBatch();
 
@@ -207,11 +194,13 @@ public class PlayScreen implements Screen {
 		//renderer for the collision boxes
 		collisionRenderer.render(world, gamecam.combined);
 		
+		/*
 		game.batch.setProjectionMatrix(gamecam.combined);
 		game.batch.begin();
 		player.draw(game.batch);
 		enemy.draw(game.batch);
 		game.batch.end();
+		*/
 	}
 	
 	public TiledMap getMap() {

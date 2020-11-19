@@ -1,16 +1,14 @@
 package com.auber.rendering;
 
+import com.auber.Tools.Box2DWorldCreator;
+import com.auber.game.AuberGame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 public class Renderer {
-
-	/**
-	 * Pixels per meter
-	 */
-	public static final float PixelsPerMetre = 100;
 
 	/**
 	 * The tool used to render the sprites
@@ -39,7 +37,7 @@ public class Renderer {
 	public Renderer() {
 		batch = new SpriteBatch();
 		handler = new AssetHandler();
-		mapRenderer = new OrthogonalTiledMapRenderer(null, 1 / PixelsPerMetre);
+		mapRenderer = new OrthogonalTiledMapRenderer(null, 1 / AuberGame.PixelsPerMetre);
 	}
 
 	/**
@@ -102,7 +100,10 @@ public class Renderer {
 	 */
 	public void setScreen(GameScreen screen) {
 		this.currentScreen = screen;
-		mapRenderer.setMap(handler.getMap(screen.getMapName()));
+		TiledMap map = handler.getMap(screen.getMapName());
+		
+		mapRenderer.setMap(map);
+		new Box2DWorldCreator(screen.getWorld(), map);
 	}
 
 	/**

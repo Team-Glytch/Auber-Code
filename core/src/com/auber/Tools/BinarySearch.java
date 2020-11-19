@@ -1,9 +1,9 @@
-package com.auber.game.Tools;
+package com.auber.Tools;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-import com.auber.game.Entities.Behaviors.Node;
+import com.auber.Entities.Behaviors.Node;
 
 class BinarySearch { 
   
