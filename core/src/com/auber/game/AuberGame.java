@@ -96,5 +96,6 @@ public class AuberGame extends Game {
 		world.dispose();
 		renderer.dispose();
 	}
+}
 
 }
