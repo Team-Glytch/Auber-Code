@@ -8,6 +8,11 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 public class Renderer {
 
 	/**
+	 * Pixels per meter
+	 */
+	public static final float PixelsPerMetre = 100;
+
+	/**
 	 * The tool used to render the sprites
 	 */
 	private SpriteBatch batch;
@@ -34,7 +39,7 @@ public class Renderer {
 	public Renderer() {
 		batch = new SpriteBatch();
 		handler = new AssetHandler();
-		mapRenderer = new OrthogonalTiledMapRenderer(null);
+		mapRenderer = new OrthogonalTiledMapRenderer(null, 1 / PixelsPerMetre);
 	}
 
 	/**
@@ -78,8 +83,13 @@ public class Renderer {
 		currentScreen.updateCamera();
 
 		for (Renderable renderable : currentScreen.getRenderables()) {
-			batch.draw(handler.getTexture(renderable.getTextureName()), renderable.getX(), renderable.getY(),
-					renderable.getWidth(), renderable.getHeight());
+			float x = renderable.getX();
+			float y = renderable.getY();
+			float width = renderable.getWidth();
+			float height = renderable.getHeight();
+
+			batch.draw(handler.getTexture(renderable.getTextureName()), x - (width / 2), y - (height / 2), width,
+					height);
 		}
 		batch.setProjectionMatrix(currentScreen.getCamera().combined);
 		batch.end();

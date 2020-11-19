@@ -21,7 +21,7 @@ public class AuberGame extends Game {
 	Player player;
 	World world;
 	
-	/*
+	/**
 	 * Initialise world
 	 */
 	@Override
@@ -33,12 +33,12 @@ public class AuberGame extends Game {
 		renderer.addTextures("assets/Sprites/");
 		renderer.addMaps("assets/Maps/");
 
-		GameScreen mainScreen = new GameScreen("SpaceShip");
+		GameScreen mainScreen = new GameScreen("SpaceStation");
 		mainScreen.setFocusedRenderable(this.player);
 		renderer.setScreen(mainScreen);
 	}
 	
-	/*
+	/**
 	 * Updates screen with movement
 	 */
 	@Override
@@ -54,7 +54,7 @@ public class AuberGame extends Game {
 	}
 	
 	
-	/*
+	/**
 	 * Key mapping and speed changes
 	 */
 	private void handleKeys() {
@@ -66,7 +66,7 @@ public class AuberGame extends Game {
 		float velX = 0;
 		float velY = 0;
 
-		float speed = 300;
+		float speed = 1;
 
 		if (moveUp) {
 			velY += speed;
@@ -88,7 +88,7 @@ public class AuberGame extends Game {
 
 	}
 	
-	/*
+	/**
 	 * Cleaning up
 	 */
 	@Override

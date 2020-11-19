@@ -48,14 +48,14 @@ public class GameScreen implements Screen {
 	 */
 	private OrthographicCamera setupCamera() {
 		OrthographicCamera camera = new OrthographicCamera();
-		gamePort = new FitViewport(720, 720, camera);
+		gamePort = new FitViewport(720 / Renderer.PixelsPerMetre, 720 / Renderer.PixelsPerMetre, camera);
 
 		camera.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
-		camera.zoom = 0.225f;
+		camera.zoom = 0.2f;
 
 		return camera;
 	}
-	
+
 	/**
 	 * @return {@link #camera}
 	 */
@@ -64,7 +64,7 @@ public class GameScreen implements Screen {
 	}
 
 	/**
-	 * Sets the renderable object that the camera is centred on 
+	 * Sets the renderable object that the camera is centred on
 	 * 
 	 * @param renderable
 	 */

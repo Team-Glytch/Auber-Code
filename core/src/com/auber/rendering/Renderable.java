@@ -14,11 +14,11 @@ public interface Renderable {
 	/**
 	 * @return The width of the texture
 	 */
-	public int getWidth();
+	public float getWidth();
 	/**
 	 * @return The height of the texture
 	 */
-	public int getHeight();
+	public float getHeight();
 	
 	/**
 	 * @return The name of the texture
