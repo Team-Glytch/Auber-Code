@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
-import com.auber.game.SpaceGamePrototype;
+import com.auber.game.AuberGame;
 import com.auber.game.Entities.Enemy;
 import com.auber.game.Entities.Player;
 import com.auber.game.Entities.Behaviors.Node;
@@ -47,7 +47,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class PlayScreen implements Screen {
 	//Reference to Game, used to set screen
-	private SpaceGamePrototype game;
+	private AuberGame game;
 	
 	public SpriteBatch batch;
 	
@@ -82,21 +82,21 @@ public class PlayScreen implements Screen {
 
 	
 
-	public PlayScreen(SpaceGamePrototype game) {
+	public PlayScreen(AuberGame game) {
 		
 		atlas = new TextureAtlas("assets/Sprites/Spritepack.atlas");
 		this.game = game;
 		//create camera used to follow player
 		gamecam = new OrthographicCamera();	
 		//create a FitViewport to maintain virtual aspect ratio despite screen size
-		gamePort = new ExtendViewport(SpaceGamePrototype.V_WIDTH / SpaceGamePrototype.PixelsPerMetre, SpaceGamePrototype.V_HEIGHT / SpaceGamePrototype.PixelsPerMetre, gamecam);
+		gamePort = new ExtendViewport(AuberGame.V_WIDTH / AuberGame.PixelsPerMetre, AuberGame.V_HEIGHT / AuberGame.PixelsPerMetre, gamecam);
 		
 		hud = new Hud(game.batch);
 		
 		//Load the map and setup its renderer
 		maploader = new TmxMapLoader();
 		map = maploader.load("assets/Maps/SpaceStation.tmx");
-		renderer = new OrthogonalTiledMapRenderer(map, 1 / SpaceGamePrototype.PixelsPerMetre);
+		renderer = new OrthogonalTiledMapRenderer(map, 1 / AuberGame.PixelsPerMetre);
 		
 		//Game camera position and zoom level
 		gamecam.position.set(gamePort.getWorldWidth() /2 , gamePort.getWorldHeight() /2,0);

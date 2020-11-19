@@ -1,6 +1,6 @@
 package com.auber.game.Tools;
 
-import com.auber.game.SpaceGamePrototype;
+import com.auber.game.AuberGame;
 import com.auber.game.Screens.PlayScreen;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -26,10 +26,10 @@ public class Box2DWorldCreator {
 			Rectangle rect = ((RectangleMapObject) object).getRectangle();
 			
 			bodyDefinition.type = BodyDef.BodyType.StaticBody;
-			bodyDefinition.position.set((rect.getX() + rect.getWidth() / 2) / SpaceGamePrototype.PixelsPerMetre, (rect.getY() + rect.getHeight() / 2) / SpaceGamePrototype.PixelsPerMetre);
+			bodyDefinition.position.set((rect.getX() + rect.getWidth() / 2) / AuberGame.PixelsPerMetre, (rect.getY() + rect.getHeight() / 2) / AuberGame.PixelsPerMetre);
 
 			body = world.createBody(bodyDefinition);
-			shape.setAsBox(rect.getWidth() / 2 / SpaceGamePrototype.PixelsPerMetre, rect.getHeight() /2 / SpaceGamePrototype.PixelsPerMetre);
+			shape.setAsBox(rect.getWidth() / 2 / AuberGame.PixelsPerMetre, rect.getHeight() /2 / AuberGame.PixelsPerMetre);
 			fixtureDefinition.shape = shape;
 			body.createFixture(fixtureDefinition);
 		};

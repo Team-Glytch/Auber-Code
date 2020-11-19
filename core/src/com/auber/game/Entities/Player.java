@@ -1,6 +1,6 @@
 package com.auber.game.Entities;
 
-import com.auber.game.SpaceGamePrototype;
+import com.auber.game.AuberGame;
 import com.auber.game.Screens.PlayScreen;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -51,7 +51,7 @@ public class Player extends Sprite{
 		playerRun = new Animation<TextureRegion>(0.125f,frames);
 				
 		definePlayer();
-		setBounds(0,0,19 / SpaceGamePrototype.PixelsPerMetre, 23 / SpaceGamePrototype.PixelsPerMetre);
+		setBounds(0,0,19 / AuberGame.PixelsPerMetre, 23 / AuberGame.PixelsPerMetre);
 		
 	}
 	
@@ -103,12 +103,12 @@ public class Player extends Sprite{
 	
 	public void definePlayer() {
 		BodyDef bodyDefinition = new BodyDef();
-		bodyDefinition.position.set(780 / SpaceGamePrototype.PixelsPerMetre,1250 / SpaceGamePrototype.PixelsPerMetre);
+		bodyDefinition.position.set(780 / AuberGame.PixelsPerMetre,1250 / AuberGame.PixelsPerMetre);
 		bodyDefinition.type = BodyDef.BodyType.DynamicBody;
 		box2dBody = world.createBody(bodyDefinition);	
 		FixtureDef fixtureDefinition = new FixtureDef();
 		CircleShape shape = new CircleShape();
-		shape.setRadius(5 / SpaceGamePrototype.PixelsPerMetre);	
+		shape.setRadius(5 / AuberGame.PixelsPerMetre);	
 		
 		fixtureDefinition.shape = shape;
 

@@ -3,7 +3,7 @@ package com.auber.game.Tools;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.auber.game.SpaceGamePrototype;
+import com.auber.game.AuberGame;
 import com.auber.game.Entities.Behaviors.Node;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -27,7 +27,7 @@ public InteractableWorldCreator(TiledMap map) {
 		
 		for(MapObject object : map.getLayers().get("Interactables").getObjects().getByType(RectangleMapObject.class)){			
 			Rectangle rect = ((RectangleMapObject) object).getRectangle();
-			Vector2 vPosition = new Vector2((rect.getX() + rect.getWidth() / 2) / SpaceGamePrototype.PixelsPerMetre,(rect.getY() + rect.getHeight() / 2) / SpaceGamePrototype.PixelsPerMetre);
+			Vector2 vPosition = new Vector2((rect.getX() + rect.getWidth() / 2) / AuberGame.PixelsPerMetre,(rect.getY() + rect.getHeight() / 2) / AuberGame.PixelsPerMetre);
 			Node newNode = new Node(vPosition);
 			locations.add(newNode);
 		}

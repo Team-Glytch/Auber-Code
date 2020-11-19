@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.auber.game.SpaceGamePrototype;
+import com.auber.game.AuberGame;
 import com.auber.game.Entities.Behaviors.Node;
 import com.auber.game.Entities.Behaviors.Pathfinding;
 import com.auber.game.Screens.PlayScreen;
@@ -69,7 +69,7 @@ public class Enemy extends Sprite{
 		playerRun = new Animation<TextureRegion>(0.125f,frames);
 				
 		defineEnemy();
-		setBounds(0,0,19 / SpaceGamePrototype.PixelsPerMetre, 23 / SpaceGamePrototype.PixelsPerMetre);
+		setBounds(0,0,19 / AuberGame.PixelsPerMetre, 23 / AuberGame.PixelsPerMetre);
 		setPath(0,1);
 		
 	}
@@ -177,7 +177,7 @@ public class Enemy extends Sprite{
 		box2dBody = world.createBody(bodyDefinition);
 		FixtureDef fixtureDefinition = new FixtureDef();
 		CircleShape shape = new CircleShape();
-		shape.setRadius(0 / SpaceGamePrototype.PixelsPerMetre);
+		shape.setRadius(0 / AuberGame.PixelsPerMetre);
 		
 		fixtureDefinition.shape = shape;
 
