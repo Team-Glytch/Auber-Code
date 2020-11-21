@@ -30,9 +30,8 @@ public class PathfindingWorldCreator {
 			locations.add(newNode);
 
 		}
-		QuickSort ob = new QuickSort(locations);
-		ob.sort(0, (locations.size()) - 1);
-		locations = ob.path;
+
+		QuickSort.sort(locations);
 	}
 
 	/**

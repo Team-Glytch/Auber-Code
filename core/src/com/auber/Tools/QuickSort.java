@@ -6,21 +6,7 @@ import com.auber.Entities.Behaviors.Node;
 
 class QuickSort {
 
-	/**
-	 * The list being sorted
-	 */
-	public List<Node> path;
-
-	/**
-	 * 
-	 * 
-	 * @param path
-	 */
-	public QuickSort(List<Node> path) {
-		this.path = path;
-	}
-
-	private int partition(int low, int high) {
+	private static int partition(List<Node> path, int low, int high) {
 		float pivot = path.get(high).getWorldPosition().x;
 		float pivotY = path.get(high).getWorldPosition().y;
 		int i = (low - 1);
@@ -48,17 +34,33 @@ class QuickSort {
 		return i + 1;
 	}
 
-	public void sort(int low, int high) {
+	/**
+	 * Sorts the list [path] between the indices [low] and [high]
+	 * 
+	 * @param path
+	 * @param low
+	 * @param high
+	 */
+	private static void sort(List<Node> path, int low, int high) {
 		if (low < high) {
 
-			int pi = partition(low, high);
+			int pi = partition(path, low, high);
 
 			// Recursively sort elements before
 			// partition and after partition
-			sort(low, pi - 1);
-			sort(pi + 1, high);
+			sort(path, low, pi - 1);
+			sort(path, pi + 1, high);
 		}
 
+	}
+	
+	/**
+	 * Quick sorts the provided node list
+	 * 
+	 * @param path
+	 */
+	public static void sort(List<Node> path) {
+		sort(path, 0, path.size() - 1);
 	}
 
 }
