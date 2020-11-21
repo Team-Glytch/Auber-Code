@@ -1,9 +1,9 @@
-package com.auber.Tools;
+package com.auber.tools;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.auber.Entities.Behaviors.Node;
+import com.auber.entities.behaviors.Node;
 import com.auber.game.AuberGame;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;

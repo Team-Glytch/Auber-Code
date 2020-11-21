@@ -1,4 +1,4 @@
-package com.auber.Entities;
+package com.auber.entities;
 
 import com.auber.game.AuberGame;
 import com.auber.rendering.Renderable;

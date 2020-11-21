@@ -1,7 +1,7 @@
 package com.auber.game;
 
-import com.auber.Entities.Enemy;
-import com.auber.Entities.Player;
+import com.auber.entities.Enemy;
+import com.auber.entities.Player;
 import com.auber.rendering.GameScreen;
 import com.auber.rendering.Renderer;
 import com.badlogic.gdx.Game;

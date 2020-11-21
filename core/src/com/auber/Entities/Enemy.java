@@ -1,14 +1,14 @@
-package com.auber.Entities;
+package com.auber.entities;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.auber.Entities.Behaviors.Node;
-import com.auber.Entities.Behaviors.Pathfinding;
-import com.auber.Tools.MathsHelper;
+import com.auber.entities.behaviors.Node;
+import com.auber.entities.behaviors.Pathfinding;
 import com.auber.game.AuberGame;
 import com.auber.rendering.GameScreen;
 import com.auber.rendering.Renderable;
+import com.auber.tools.MathsHelper;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;

@@ -1,8 +1,8 @@
-package com.auber.Tools;
+package com.auber.tools;
 
 import java.util.List;
 
-import com.auber.Entities.Behaviors.Node;
+import com.auber.entities.behaviors.Node;
 
 class BinarySearch {
 

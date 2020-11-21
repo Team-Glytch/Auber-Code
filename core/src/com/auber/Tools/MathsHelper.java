@@ -1,4 +1,4 @@
-package com.auber.Tools;
+package com.auber.tools;
 
 public class MathsHelper {
 

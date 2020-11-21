@@ -1,11 +1,11 @@
-package com.auber.Entities.Behaviors;
+package com.auber.entities.behaviors;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 
-import com.auber.Tools.MathsHelper;
-import com.auber.Tools.PathfindingWorldCreator;
+import com.auber.tools.MathsHelper;
+import com.auber.tools.PathfindingWorldCreator;
 
 public class Pathfinding {
 

@@ -3,9 +3,9 @@ package com.auber.rendering;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.auber.Tools.InteractableWorldCreator;
-import com.auber.Tools.PathfindingWorldCreator;
 import com.auber.game.AuberGame;
+import com.auber.tools.InteractableWorldCreator;
+import com.auber.tools.PathfindingWorldCreator;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
