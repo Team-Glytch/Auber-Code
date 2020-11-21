@@ -1,10 +1,10 @@
 package com.auber.Entities.Behaviors;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 
+import com.auber.Tools.MathsHelper;
 import com.auber.Tools.PathfindingWorldCreator;
 
 public class Pathfinding {
@@ -18,17 +18,6 @@ public class Pathfinding {
 	 * The structure containing the data about the paths in the map
 	 */
 	PathfindingWorldCreator pathfinder;
-
-	/**
-	 * @param d
-	 * @param decimalPlace
-	 * @return The number [d] rounded to [decimalPlace] amount of decimal places
-	 */
-	public static float round(float d, int decimalPlace) {
-		BigDecimal bd = new BigDecimal(Float.toString(d));
-		bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
-		return bd.floatValue();
-	}
 
 	/**
 	 * @param startPosition
@@ -59,8 +48,8 @@ public class Pathfinding {
 			}
 			openSet.remove(currentNode);
 			closedSet.add(currentNode);
-			if (round(currentNode.getWorldPosition().x, 2) == round(endNode.getWorldPosition().x, 2)
-					&& round(currentNode.getWorldPosition().y, 2) == round(endNode.getWorldPosition().y, 2)) {
+			if (MathsHelper.round(currentNode.getWorldPosition().x, 2) == MathsHelper.round(endNode.getWorldPosition().x, 2)
+					&& MathsHelper.round(currentNode.getWorldPosition().y, 2) == MathsHelper.round(endNode.getWorldPosition().y, 2)) {
 				return retracePath(startNode, currentNode);
 			}
 
@@ -114,8 +103,8 @@ public class Pathfinding {
 	 * @return The distance between [nodeA] and [nodeB]
 	 */
 	public float getDistance(Node nodeA, Node nodeB) {
-		float distanceX = round(nodeA.getWorldPosition().x, 2) - round(nodeB.getWorldPosition().x, 2);
-		float distanceY = round(nodeA.getWorldPosition().y, 2) - round(nodeB.getWorldPosition().y, 2);
+		float distanceX = MathsHelper.round(nodeA.getWorldPosition().x, 2) - MathsHelper.round(nodeB.getWorldPosition().x, 2);
+		float distanceY = MathsHelper.round(nodeA.getWorldPosition().y, 2) - MathsHelper.round(nodeB.getWorldPosition().y, 2);
 
 		return (float) Math.sqrt(distanceX * distanceX + distanceY * distanceY);
 	}

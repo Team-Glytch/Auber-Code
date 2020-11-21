@@ -1,6 +1,5 @@
 package com.auber.Tools;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import com.auber.Entities.Behaviors.Node;
@@ -21,14 +20,14 @@ class BinarySearch {
 				mid = (lowerBound + upperBound) / 2;
 			}
 
-			if (round(locations.get(mid).getWorldPosition().x, 2) == round(x.getWorldPosition().x, 2)) {
+			if (MathsHelper.round(locations.get(mid).getWorldPosition().x, 2) == MathsHelper.round(x.getWorldPosition().x, 2)) {
 				foundX = true;
-				if (round(locations.get(mid).getWorldPosition().y, 2) == round(x.getWorldPosition().y, 2)) {
+				if (MathsHelper.round(locations.get(mid).getWorldPosition().y, 2) == MathsHelper.round(x.getWorldPosition().y, 2)) {
 
 					return mid;
 				}
 
-				if (round(locations.get(mid).getWorldPosition().y, 2) < round(x.getWorldPosition().y, 2)) {
+				if (MathsHelper.round(locations.get(mid).getWorldPosition().y, 2) < MathsHelper.round(x.getWorldPosition().y, 2)) {
 					mid += 1;
 					lowerBound += 1;
 				} else {
@@ -40,7 +39,7 @@ class BinarySearch {
 				return -1;
 			}
 
-			if (round(locations.get(mid).getWorldPosition().x, 2) < round(x.getWorldPosition().x, 2)) {
+			if (MathsHelper.round(locations.get(mid).getWorldPosition().x, 2) < MathsHelper.round(x.getWorldPosition().x, 2)) {
 				lowerBound = mid + 1;
 
 			} else {
@@ -50,17 +49,6 @@ class BinarySearch {
 		}
 
 		return -1;
-	}
-
-	/**
-	 * @param d
-	 * @param decimalPlace
-	 * @return The number [d] rounded to [decimalPlace] decimal places 
-	 */
-	public static float round(float d, int decimalPlace) {
-		BigDecimal bd = new BigDecimal(Float.toString(d));
-		bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
-		return bd.floatValue();
 	}
 
 }

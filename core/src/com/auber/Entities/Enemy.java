@@ -1,12 +1,11 @@
 package com.auber.Entities;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import com.auber.Entities.Behaviors.Node;
 import com.auber.Entities.Behaviors.Pathfinding;
+import com.auber.Tools.MathsHelper;
 import com.auber.game.AuberGame;
 import com.auber.rendering.GameScreen;
 import com.auber.rendering.Renderable;
@@ -54,48 +53,37 @@ public class Enemy implements Renderable {
 	}
 	
 	/**
-	 * @param d
-	 * @param decimalPlace
-	 * @return The number [d] rounded to [decimalPlace] decimal places
-	 */
-	private static float round(float d, int decimalPlace) {
-		BigDecimal bd = new BigDecimal(Float.toString(d));
-		bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
-		return bd.floatValue();
-	}
-
-	/**
 	 * Moves the enemy to the specified node
 	 * 
 	 * @param node
 	 */
 	private void move(Node node) {
 		// Checks whether the enemy has reached the node
-		if (round(node.getWorldPosition().x, 2) == round(box2dBody.getPosition().x, 2)
-				&& round(node.getWorldPosition().y, 2) == round(box2dBody.getPosition().y, 2)) {
+		if (MathsHelper.round(node.getWorldPosition().x, 2) == MathsHelper.round(box2dBody.getPosition().x, 2)
+				&& MathsHelper.round(node.getWorldPosition().y, 2) == MathsHelper.round(box2dBody.getPosition().y, 2)) {
 			path.remove(0);
 			if (path.size() == 0) {
 				setPath(1, 2);
 			}
 		} else {
 			// Checks if the enemy has reached the y coordinate of the node
-			if (round(node.getWorldPosition().y, 2) - round(box2dBody.getPosition().y, 2) == 0) {
+			if (MathsHelper.round(node.getWorldPosition().y, 2) - MathsHelper.round(box2dBody.getPosition().y, 2) == 0) {
 				//Checks if the node is to the right or left of the enemy, respectively
 				if (isNodeToRightOfEnemy(node)) {
-					box2dBody.setTransform(round(box2dBody.getPosition().x + 0.01f, 2),
-							round(box2dBody.getPosition().y, 2), 0);
+					box2dBody.setTransform(MathsHelper.round(box2dBody.getPosition().x + 0.01f, 2),
+							MathsHelper.round(box2dBody.getPosition().y, 2), 0);
 				} else {
-					box2dBody.setTransform(round(box2dBody.getPosition().x - 0.01f, 2),
-							round(box2dBody.getPosition().y, 2), 0);
+					box2dBody.setTransform(MathsHelper.round(box2dBody.getPosition().x - 0.01f, 2),
+							MathsHelper.round(box2dBody.getPosition().y, 2), 0);
 				}
 			} else {
 				// Checks if the enemy is above the node or below it, respectively
 				if (isNodeAboveEnemy(node)) {
-					box2dBody.setTransform(round(box2dBody.getPosition().x, 2),
-							round(box2dBody.getPosition().y + 0.01f, 2), 0);
+					box2dBody.setTransform(MathsHelper.round(box2dBody.getPosition().x, 2),
+							MathsHelper.round(box2dBody.getPosition().y + 0.01f, 2), 0);
 				} else {
-					box2dBody.setTransform(round(box2dBody.getPosition().x, 2),
-							round(box2dBody.getPosition().y - 0.01f, 2), 0);
+					box2dBody.setTransform(MathsHelper.round(box2dBody.getPosition().x, 2),
+							MathsHelper.round(box2dBody.getPosition().y - 0.01f, 2), 0);
 				}
 			}
 
@@ -108,7 +96,7 @@ public class Enemy implements Renderable {
 	 * @return True if the specified node is on the right side of the enemy, False otherwise
 	 */
 	private boolean isNodeToRightOfEnemy(Node node) {
-		return round(node.getWorldPosition().x, 2) - round(box2dBody.getPosition().x, 2) > 0;
+		return MathsHelper.round(node.getWorldPosition().x, 2) - MathsHelper.round(box2dBody.getPosition().x, 2) > 0;
 	}
 	
 	/**
@@ -116,7 +104,7 @@ public class Enemy implements Renderable {
 	 * @return True if the specified node is above the enemy, False otherwise
 	 */
 	private boolean isNodeAboveEnemy(Node node) {
-		return round(node.getWorldPosition().y, 2) - round(box2dBody.getPosition().y, 2) > 0;
+		return MathsHelper.round(node.getWorldPosition().y, 2) - MathsHelper.round(box2dBody.getPosition().y, 2) > 0;
 	}
 	
 	/**
