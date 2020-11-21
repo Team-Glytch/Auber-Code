@@ -1,10 +1,10 @@
-package com.auber.game.Tools;
+package com.auber.tools;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.auber.entities.behaviors.Node;
 import com.auber.game.AuberGame;
-import com.auber.game.Entities.Behaviors.Node;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -13,15 +13,17 @@ import com.badlogic.gdx.math.Vector2;
 
 public class InteractableWorldCreator {
 	
+	/**
+	 * The list of all of the interactable objects
+	 */
 	private ArrayList<Node> locations;	
-	private TiledMap map;
 
-public InteractableWorldCreator(TiledMap map) {
-		
-		this.map = map;		
-	}
-	
-	public void setLocations() {
+	/**
+	 * Sets up the locations of the interactable objects
+	 * 
+	 * @param map
+	 */
+	public InteractableWorldCreator(TiledMap map) {
 		
 		this.locations = new ArrayList<Node>();
 		
@@ -31,8 +33,12 @@ public InteractableWorldCreator(TiledMap map) {
 			Node newNode = new Node(vPosition);
 			locations.add(newNode);
 		}
+	
 	}
 	
+	/**
+	 * @return {@link #locations}
+	 */
 	public List<Node> getLocations() {
 		return this.locations;
 	}

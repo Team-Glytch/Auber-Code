@@ -25,4 +25,11 @@ public interface Renderable {
 	 */
 	public String getTextureName();
 	
+	/**
+	 * Updates the renderable object
+	 */
+	public void update(float deltaTime);
+	
+	public boolean isMovingRight();
+	
 }

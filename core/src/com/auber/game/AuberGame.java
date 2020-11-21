@@ -1,13 +1,11 @@
 package com.auber.game;
 
+import com.auber.entities.Enemy;
+import com.auber.entities.Player;
 import com.auber.rendering.GameScreen;
 import com.auber.rendering.Renderer;
-import com.auber.tmp.Player;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.World;
 
 public class AuberGame extends Game {
 	/**
@@ -15,29 +13,39 @@ public class AuberGame extends Game {
 	 */
 	private Renderer renderer;
 
-	/*
-	 * Used mainly for testing, will be cleaned up
+	/**
+	 * How many pixels there are per metre 
 	 */
-	Player player;
-	World world;
-	
+	public static final float PixelsPerMetre = 100;
+	/**
+	 * Width of the screen
+	 */
+	public static final float V_WIDTH = 720;
+	/**
+	 * Height of the screen
+	 */
+	public static final float V_HEIGHT = 720;
+
 	/**
 	 * Initialise world
 	 */
 	@Override
 	public void create() {
-		world = new World(new Vector2(0, 0), true);
-		this.player = new Player(world);
 
 		renderer = new Renderer();
 		renderer.addTextures("assets/Sprites/");
 		renderer.addMaps("assets/Maps/");
 
-		GameScreen mainScreen = new GameScreen("SpaceStation");
-		mainScreen.setFocusedRenderable(this.player);
+		GameScreen mainScreen = new GameScreen("SpaceStation", renderer.getHandler());
+
+		Enemy enemy = new Enemy(mainScreen);
+		mainScreen.addRenderable(enemy);
+
+		Player player = new Player(mainScreen.getWorld());
+		mainScreen.setFocusedRenderable(player);
 		renderer.setScreen(mainScreen);
 	}
-	
+
 	/**
 	 * Updates screen with movement
 	 */
@@ -47,55 +55,18 @@ public class AuberGame extends Game {
 			setScreen(renderer.getCurrentScreen());
 		}
 
-		handleKeys();
-		world.step(1 / 60f, 6, 2);
+		renderer.getCurrentScreen().update(Gdx.graphics.getDeltaTime());
+
+		renderer.getCurrentScreen().getWorld().step(1 / 60f, 6, 2);
 
 		renderer.render();
 	}
-	
-	
-	/**
-	 * Key mapping and speed changes
-	 */
-	private void handleKeys() {
-		boolean moveUp = (Gdx.input.isKeyPressed(Input.Keys.UP));
-		boolean moveDown = (Gdx.input.isKeyPressed(Input.Keys.DOWN));
-		boolean moveRight = (Gdx.input.isKeyPressed(Input.Keys.RIGHT));
-		boolean moveLeft = (Gdx.input.isKeyPressed(Input.Keys.LEFT));
 
-		float velX = 0;
-		float velY = 0;
-
-		float speed = 1;
-
-		if (moveUp) {
-			velY += speed;
-		}
-
-		if (moveDown) {
-			velY -= speed;
-		}
-
-		if (moveLeft) {
-			velX -= speed;
-		}
-
-		if (moveRight) {
-			velX += speed;
-		}
-
-		player.box2dBody.setLinearVelocity(velX, velY);
-
-	}
-	
 	/**
 	 * Cleaning up
 	 */
 	@Override
 	public void dispose() {
-		world.dispose();
 		renderer.dispose();
 	}
-}
-
 }
