@@ -12,7 +12,7 @@ class BinarySearch {
 	 * @param x
 	 * @return The index of node [x] within [locations]
 	 */
-	public int binarySearch(List<Node> locations, Node x) {
+	public static int search(List<Node> locations, Node x) {
 		int lowerBound = 0, upperBound = (locations.size() - 1);
 		boolean foundX = false;
 		int mid = 0;

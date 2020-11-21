@@ -67,8 +67,7 @@ public class PathfindingWorldCreator {
 				float checkY = node.getWorldPosition().y + (y * 0.16f);
 				Vector2 checkV = new Vector2(checkX, checkY);
 				Node checkN = new Node(checkV);
-				BinarySearch ob = new BinarySearch();
-				int result = ob.binarySearch(locations, checkN);
+				int result = BinarySearch.search(locations, checkN);
 				if (result != -1) {
 					neighbours.add(locations.get(result));
 				}
