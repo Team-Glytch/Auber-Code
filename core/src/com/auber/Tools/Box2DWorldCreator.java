@@ -12,6 +12,13 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
 public class Box2DWorldCreator {
+	
+	/**
+	 * Defines the collision boundary boxes of map into world
+	 * 
+	 * @param world
+	 * @param map
+	 */
 	public Box2DWorldCreator(World world, TiledMap map) {
 		BodyDef bodyDefinition = new BodyDef();
 		PolygonShape shape = new PolygonShape();

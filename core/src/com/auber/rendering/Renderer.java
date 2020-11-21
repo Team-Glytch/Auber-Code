@@ -5,6 +5,7 @@ import com.auber.game.AuberGame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
@@ -40,6 +41,10 @@ public class Renderer {
 		mapRenderer = new OrthogonalTiledMapRenderer(null, 1 / AuberGame.PixelsPerMetre);
 	}
 
+	public AssetHandler getHandler() {
+		return handler;
+	}
+	
 	/**
 	 * @return {@link #currentScreen}
 	 */
@@ -86,8 +91,18 @@ public class Renderer {
 			float width = renderable.getWidth();
 			float height = renderable.getHeight();
 
-			batch.draw(handler.getTexture(renderable.getTextureName()), x - (width / 2), y - (height / 2), width,
+			TextureRegion texture = handler.getTexture(renderable.getTextureName());
+			
+			if (!renderable.isMovingRight()) {
+				texture.flip(true, false);
+			}
+			
+			batch.draw(texture, x - (width / 2), y - (height / 2), width,
 					height);
+			
+			if (!renderable.isMovingRight()) {
+				texture.flip(true, false);
+			}
 		}
 		batch.setProjectionMatrix(currentScreen.getCamera().combined);
 		batch.end();
@@ -110,6 +125,7 @@ public class Renderer {
 	 * Disposes of the renderer's tools
 	 */
 	public void dispose() {
+		currentScreen.dispose();
 		mapRenderer.dispose();
 		batch.dispose();
 	}

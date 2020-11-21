@@ -13,15 +13,17 @@ import com.badlogic.gdx.math.Vector2;
 
 public class InteractableWorldCreator {
 	
+	/**
+	 * The list of all of the interactable objects
+	 */
 	private ArrayList<Node> locations;	
-	private TiledMap map;
 
-public InteractableWorldCreator(TiledMap map) {
-		
-		this.map = map;		
-	}
-	
-	public void setLocations() {
+	/**
+	 * Sets up the locations of the interactable objects
+	 * 
+	 * @param map
+	 */
+	public InteractableWorldCreator(TiledMap map) {
 		
 		this.locations = new ArrayList<Node>();
 		
@@ -31,8 +33,12 @@ public InteractableWorldCreator(TiledMap map) {
 			Node newNode = new Node(vPosition);
 			locations.add(newNode);
 		}
+	
 	}
 	
+	/**
+	 * @return {@link #locations}
+	 */
 	public List<Node> getLocations() {
 		return this.locations;
 	}

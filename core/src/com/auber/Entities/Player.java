@@ -1,125 +1,137 @@
 package com.auber.Entities;
 
-import com.auber.Screens.PlayScreen;
 import com.auber.game.AuberGame;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.auber.rendering.Renderable;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
 
-public class Player extends Sprite{
-	public enum State{IDLE,RUNNING};
-	public State currentState;
-	public State previousState;
+public class Player implements Renderable {
 
-
-
-	private Animation<TextureRegion> playerIdle;
-	private Animation<TextureRegion> playerRun;
-	private float stateTimer;
-	private boolean facingRight;
-	
-	public World world;
+	/**
+	 * The world the player is in
+	 */
+	private World world;
+	/**
+	 * The box defining the player's position, and bounding box
+	 */
 	public Body box2dBody;
 
-	
-	public Player(World world,PlayScreen screen) {
-		super(screen.getAtlas().findRegion("playerIdle"));
+	/**
+	 * @param world The world the player is in
+	 */
+	public Player(World world) {
 		this.world = world;
-		currentState = State.IDLE;
-		previousState = State.IDLE;
-		stateTimer = 0;
-		facingRight = true;
-		
-		Array<TextureRegion> frames = new Array<TextureRegion>();
-		for(int i = 16; i < 20; i ++) {
-			
-			frames.add(new TextureRegion(getTexture(), (i * 19) + 7,0,19,23));
-		}		
-		playerIdle = new Animation<TextureRegion>(0.125f,frames);
-		frames.clear();
-		
-		for(int i = 6; i < 12; i++) {
-			
-			frames.add(new TextureRegion(getTexture(), (i * 19)+3, 0,19,23));
-		}			
-		playerRun = new Animation<TextureRegion>(0.125f,frames);
-				
-		definePlayer();
-		setBounds(0,0,19 / AuberGame.PixelsPerMetre, 23 / AuberGame.PixelsPerMetre);
-		
+		this.box2dBody = definePlayer();
 	}
-	
-	public void update(float deltaTime) {
-		
-		setPosition((box2dBody.getPosition().x - getWidth()/2),(box2dBody.getPosition().y - getHeight()/4) );
-		setRegion(getFrame(deltaTime));
-        
-	}
-	
-	public TextureRegion getFrame(float deltaTime) {
-		
-		currentState = getState();
-		TextureRegion region;
-		switch(currentState) {
-			case RUNNING:
-				region = playerRun.getKeyFrame(stateTimer,true);
-				break;
-			case IDLE:
-			default:
-				region = playerIdle.getKeyFrame(stateTimer,true);
-				break;
-				
-		}
-		
-		if((box2dBody.getLinearVelocity().x < 0 || !facingRight) && !region.isFlipX()) {
-			region.flip(true,false);
-			facingRight = false;
-		}
-		else if((box2dBody.getLinearVelocity().x > 0 || facingRight) && region.isFlipX()) {
-			region.flip(true,false);
-			facingRight = true;
-		}
-		
-		stateTimer = currentState == previousState ? stateTimer + deltaTime : 0;
-		previousState = currentState;
-		return region;
-		
-		
-	}
-	
-	public State getState() {
-		if(box2dBody.getLinearVelocity().x != 0 || box2dBody.getLinearVelocity().y != 0)
-			return State.RUNNING;
-		else
-			return State.IDLE;
-	}
-	
-	
-	public void definePlayer() {
+
+	/**
+	 * @return The box defining the shape and position of the player
+	 */
+	private Body definePlayer() {
+		// Position and Type
 		BodyDef bodyDefinition = new BodyDef();
-		bodyDefinition.position.set(780 / AuberGame.PixelsPerMetre,1250 / AuberGame.PixelsPerMetre);
+		bodyDefinition.position.set(780 / AuberGame.PixelsPerMetre, 1250 / AuberGame.PixelsPerMetre);
 		bodyDefinition.type = BodyDef.BodyType.DynamicBody;
-		box2dBody = world.createBody(bodyDefinition);	
+
+		// Collision
+		Body box2dBody = world.createBody(bodyDefinition);
 		FixtureDef fixtureDefinition = new FixtureDef();
 		CircleShape shape = new CircleShape();
-		shape.setRadius(5 / AuberGame.PixelsPerMetre);	
-		
+		shape.setRadius(5 / AuberGame.PixelsPerMetre);
+
 		fixtureDefinition.shape = shape;
 
 		box2dBody.createFixture(fixtureDefinition);
-	}
-	
 
+		return box2dBody;
+	}
+
+	/**
+	 * @return True if the player is moving, False otherwise
+	 */
+	private boolean isMoving() {
+		return box2dBody.getLinearVelocity().x != 0 || box2dBody.getLinearVelocity().y != 0;
+	}
+
+	/**
+	 * Key mapping and speed changes
+	 */
+	private void handleKeys() {
+		boolean moveUp = (Gdx.input.isKeyPressed(Input.Keys.UP));
+		boolean moveDown = (Gdx.input.isKeyPressed(Input.Keys.DOWN));
+		boolean moveRight = (Gdx.input.isKeyPressed(Input.Keys.RIGHT));
+		boolean moveLeft = (Gdx.input.isKeyPressed(Input.Keys.LEFT));
+
+		// Whether the player should move up
+		if (moveUp && this.box2dBody.getLinearVelocity().y < 0.7f && !moveDown) {
+			this.box2dBody.applyLinearImpulse(new Vector2(0f, 0.15f), this.box2dBody.getWorldCenter(), true);
 			
+		// Whether the player should move down
+		} else if (moveDown && this.box2dBody.getLinearVelocity().y > -0.7f && !moveUp) {
+			this.box2dBody.applyLinearImpulse(new Vector2(0f, -0.15f), this.box2dBody.getWorldCenter(), true);
 			
-		
-	
-	
-	 
+		// Whether the player's up and down motions cancel each other out
+		} else if (moveUp == moveDown) {
+			this.box2dBody.setLinearVelocity(this.box2dBody.getLinearVelocity().x, 0f);
+		}
+
+		// Whether the player should move right
+		if (moveRight && this.box2dBody.getLinearVelocity().x < 0.7f && !moveLeft) {
+			this.box2dBody.applyLinearImpulse(new Vector2(0.15f, 0f), this.box2dBody.getWorldCenter(), true);
+			
+		// Whether the player should move left
+		} else if (moveLeft && this.box2dBody.getLinearVelocity().x > -0.7f && !moveRight) {
+			this.box2dBody.applyLinearImpulse(new Vector2(-0.15f, 0f), this.box2dBody.getWorldCenter(), true);
+			
+		// Whether the player's left and right motions cancel each other out
+		} else if (moveRight == moveLeft) {
+			this.box2dBody.setLinearVelocity(0f, this.box2dBody.getLinearVelocity().y);
+		}
+	}
+
+	@Override
+	public void update(float deltaTime) {
+		handleKeys();
+	}
+
+	@Override
+	public float getX() {
+		return box2dBody.getPosition().x;
+	}
+
+	@Override
+	public float getY() {
+		return box2dBody.getPosition().y;
+	}
+
+	@Override
+	public float getWidth() {
+		return (20f / AuberGame.PixelsPerMetre);
+	}
+
+	@Override
+	public float getHeight() {
+		return (20f / AuberGame.PixelsPerMetre);
+	}
+
+	@Override
+	public String getTextureName() {
+		if (isMoving()) {
+			return "PlayerRun";
+		} else {
+			return "PlayerIdle";
+		}
+
+	}
+
+	@Override
+	public boolean isMovingRight() {
+		return !isMoving() || box2dBody.getLinearVelocity().x >= 0;
+	}
 }
