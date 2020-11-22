@@ -2,12 +2,12 @@ package com.auber.entities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import com.auber.entities.behaviors.Node;
 import com.auber.entities.behaviors.Pathfinding;
 import com.auber.game.AuberGame;
 import com.auber.gameplay.GameScreen;
-import com.auber.gameplay.Rooms;
 import com.auber.rendering.Renderable;
 import com.auber.tools.MathsHelper;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -122,7 +122,7 @@ public class Enemy implements Renderable {
 		List<Integer> operationalIDs = gameScreen.getRooms().getOperationalIDs();
 
 		if (!operationalIDs.isEmpty()) {
-			setPath(startID, operationalIDs.get(0));
+			setPath(startID, operationalIDs.get(new Random().nextInt(operationalIDs.size())));
 		}
 	}
 

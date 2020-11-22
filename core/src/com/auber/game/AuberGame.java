@@ -14,7 +14,7 @@ public class AuberGame extends Game {
 	private Renderer renderer;
 
 	/**
-	 * How many pixels there are per metre 
+	 * How many pixels there are per metre
 	 */
 	public static final float PixelsPerMetre = 100;
 	/**
@@ -38,8 +38,10 @@ public class AuberGame extends Game {
 
 		GameScreen mainScreen = new GameScreen("SpaceStation", renderer.getHandler());
 
-		Enemy enemy = new Enemy(mainScreen);
-		mainScreen.addRenderable(enemy);
+		for (int i = 0; i < 8; i++) {
+			Enemy enemy = new Enemy(mainScreen);
+			mainScreen.addRenderable(enemy);
+		}
 
 		Player player = new Player(mainScreen.getWorld());
 		mainScreen.setFocusedRenderable(player);
