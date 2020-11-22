@@ -8,6 +8,7 @@ import com.auber.rendering.AssetHandler;
 import com.auber.rendering.Renderable;
 import com.auber.tools.InteractableWorldCreator;
 import com.auber.tools.PathfindingWorldCreator;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -99,6 +100,11 @@ public class GameScreen implements Screen {
 	public void update(float deltaTime) {
 		for (Renderable renderable : renderables) {
 			renderable.update(deltaTime);
+		}
+		
+		if (rooms.getOperationalIDs().size() == 0) {
+			System.out.println("GAME OVER");
+			Gdx.app.exit();
 		}
 	}
 
