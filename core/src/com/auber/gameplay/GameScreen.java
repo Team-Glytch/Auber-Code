@@ -3,6 +3,7 @@ package com.auber.gameplay;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.auber.entities.Enemy;
 import com.auber.game.AuberGame;
 import com.auber.rendering.AssetHandler;
 import com.auber.rendering.Renderable;
@@ -48,11 +49,11 @@ public class GameScreen implements Screen {
 	private InteractableWorldCreator interactables;
 
 	private Rooms rooms;
-	
+
 	public Rooms getRooms() {
 		return rooms;
 	}
-	
+
 	/**
 	 * The objects that are needed to be rendered
 	 */
@@ -63,6 +64,8 @@ public class GameScreen implements Screen {
 		this.renderables = new ArrayList<Renderable>();
 
 		this.world = new World(new Vector2(0, 0), true);
+		this.world.setContactListener(new EnemyContactListener(this));
+
 		camera = setupCamera();
 
 		this.focusedRenderableIndex = -1;
@@ -72,8 +75,18 @@ public class GameScreen implements Screen {
 		interactables = new InteractableWorldCreator(map);
 
 		rooms = new Rooms(interactables.getLocations().size());
-		
+
 		pathfinder = new PathfindingWorldCreator(map);
+	}
+
+	public boolean containsEnemies() {
+		for (Renderable r : renderables) {
+			if (r instanceof Enemy) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**
@@ -101,7 +114,12 @@ public class GameScreen implements Screen {
 		for (Renderable renderable : renderables) {
 			renderable.update(deltaTime);
 		}
-		
+
+		if (!containsEnemies()) {
+			System.out.println("YOU WIN");
+			Gdx.app.exit();
+		}
+
 		if (rooms.getOperationalIDs().size() == 0) {
 			System.out.println("GAME OVER");
 			Gdx.app.exit();
@@ -182,6 +200,25 @@ public class GameScreen implements Screen {
 			camera.position.x = focusedRenderable.getX();
 			camera.position.y = focusedRenderable.getY();
 			camera.update();
+		}
+	}
+
+	/**
+	 * Removes a renderable from the game
+	 * 
+	 * @param renderable
+	 */
+	public void removeRenderable(Renderable renderable) {
+		int index = renderables.indexOf(renderable);
+
+		if (index != -1) {
+			renderables.remove(index);
+
+			if (focusedRenderableIndex == index) {
+				focusedRenderableIndex = -1;
+			} else if (focusedRenderableIndex > index) {
+				focusedRenderableIndex -= 1;
+			}
 		}
 	}
 

@@ -42,12 +42,12 @@ public class Enemy implements Renderable {
 	 * 
 	 * @param screen The game screen the enemy is in
 	 */
-	public Enemy(GameScreen screen) {
+	public Enemy(GameScreen screen, int firstDestination) {
 		this.gameScreen = screen;
 
 		defineEnemy();
 
-		setNewPath();
+		setPath(0, firstDestination);
 
 	}
 
@@ -149,16 +149,16 @@ public class Enemy implements Renderable {
 		bodyDefinition.position.set(gameScreen.getInteractables().getLocations().get(0).getWorldPosition().x,
 				gameScreen.getInteractables().getLocations().get(0).getWorldPosition().y);
 		bodyDefinition.type = BodyDef.BodyType.DynamicBody;
+		box2dBody = gameScreen.getWorld().createBody(bodyDefinition);
 
 		// Collisions
-		box2dBody = gameScreen.getWorld().createBody(bodyDefinition);
 		FixtureDef fixtureDefinition = new FixtureDef();
 		CircleShape shape = new CircleShape();
-		shape.setRadius(1 / AuberGame.PixelsPerMetre);
-
+		shape.setRadius(0 / AuberGame.PixelsPerMetre);
 		fixtureDefinition.shape = shape;
-
 		box2dBody.createFixture(fixtureDefinition);
+		
+		box2dBody.setUserData(this);
 	}
 
 	@Override

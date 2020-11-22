@@ -39,7 +39,7 @@ public class AuberGame extends Game {
 		GameScreen mainScreen = new GameScreen("SpaceStation", renderer.getHandler());
 
 		for (int i = 0; i < 8; i++) {
-			Enemy enemy = new Enemy(mainScreen);
+			Enemy enemy = new Enemy(mainScreen, i);
 			mainScreen.addRenderable(enemy);
 		}
 

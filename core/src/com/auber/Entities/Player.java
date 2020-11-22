@@ -20,7 +20,7 @@ public class Player implements Renderable {
 	/**
 	 * The box defining the player's position, and bounding box
 	 */
-	public Body box2dBody;
+	private Body box2dBody;
 
 	/**
 	 * @param world The world the player is in
@@ -38,17 +38,16 @@ public class Player implements Renderable {
 		BodyDef bodyDefinition = new BodyDef();
 		bodyDefinition.position.set(780 / AuberGame.PixelsPerMetre, 1250 / AuberGame.PixelsPerMetre);
 		bodyDefinition.type = BodyDef.BodyType.DynamicBody;
+		Body box2dBody = world.createBody(bodyDefinition);
+		box2dBody.setUserData(this);
 
 		// Collision
-		Body box2dBody = world.createBody(bodyDefinition);
 		FixtureDef fixtureDefinition = new FixtureDef();
 		CircleShape shape = new CircleShape();
 		shape.setRadius(5 / AuberGame.PixelsPerMetre);
-
 		fixtureDefinition.shape = shape;
-
 		box2dBody.createFixture(fixtureDefinition);
-
+		
 		return box2dBody;
 	}
 
