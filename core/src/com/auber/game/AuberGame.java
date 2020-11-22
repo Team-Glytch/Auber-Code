@@ -2,7 +2,7 @@ package com.auber.game;
 
 import com.auber.entities.Enemy;
 import com.auber.entities.Player;
-import com.auber.rendering.GameScreen;
+import com.auber.gameplay.GameScreen;
 import com.auber.rendering.Renderer;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;

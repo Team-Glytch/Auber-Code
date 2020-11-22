@@ -1,5 +1,7 @@
 package com.auber.tools;
 
+import java.math.BigDecimal;
+
 public class MathsHelper {
 
 	/**
@@ -8,9 +10,9 @@ public class MathsHelper {
 	 * @return The number [d] rounded to [decimalPlace] decimal places 
 	 */
 	public static float round(float d, int decimalPlace) {
-		float multiplier = (float) Math.pow(10, decimalPlace) - 1;
-		
-		return (float) (Math.floor(d * multiplier) / multiplier);
+		BigDecimal bd = new BigDecimal(Float.toString(d));
+	    bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
+	    return bd.floatValue();
 	}
 	
 }

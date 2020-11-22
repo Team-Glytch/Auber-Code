@@ -6,7 +6,8 @@ import java.util.List;
 import com.auber.entities.behaviors.Node;
 import com.auber.entities.behaviors.Pathfinding;
 import com.auber.game.AuberGame;
-import com.auber.rendering.GameScreen;
+import com.auber.gameplay.GameScreen;
+import com.auber.gameplay.Rooms;
 import com.auber.rendering.Renderable;
 import com.auber.tools.MathsHelper;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -34,6 +35,8 @@ public class Enemy implements Renderable {
 	 */
 	private ArrayList<Node> path;
 
+	int destinationID;
+
 	/**
 	 * Constructs the Enemy
 	 * 
@@ -43,15 +46,18 @@ public class Enemy implements Renderable {
 		this.gameScreen = screen;
 
 		defineEnemy();
-		setPath(0, 1);
+
+		setNewPath();
 
 	}
 
 	@Override
 	public void update(float deltaTime) {
-		move(path.get(0));
+		if (!path.isEmpty()) {
+			move(path.get(0));
+		}
 	}
-	
+
 	/**
 	 * Moves the enemy to the specified node
 	 * 
@@ -63,12 +69,13 @@ public class Enemy implements Renderable {
 				&& MathsHelper.round(node.getWorldPosition().y, 2) == MathsHelper.round(box2dBody.getPosition().y, 2)) {
 			path.remove(0);
 			if (path.size() == 0) {
-				setPath(1, 2);
+				setNewPath();
 			}
 		} else {
 			// Checks if the enemy has reached the y coordinate of the node
-			if (MathsHelper.round(node.getWorldPosition().y, 2) - MathsHelper.round(box2dBody.getPosition().y, 2) == 0) {
-				//Checks if the node is to the right or left of the enemy, respectively
+			if (MathsHelper.round(node.getWorldPosition().y, 2)
+					- MathsHelper.round(box2dBody.getPosition().y, 2) == 0) {
+				// Checks if the node is to the right or left of the enemy, respectively
 				if (isNodeToRightOfEnemy(node)) {
 					box2dBody.setTransform(MathsHelper.round(box2dBody.getPosition().x + 0.01f, 2),
 							MathsHelper.round(box2dBody.getPosition().y, 2), 0);
@@ -93,12 +100,13 @@ public class Enemy implements Renderable {
 
 	/**
 	 * @param node
-	 * @return True if the specified node is on the right side of the enemy, False otherwise
+	 * @return True if the specified node is on the right side of the enemy, False
+	 *         otherwise
 	 */
 	private boolean isNodeToRightOfEnemy(Node node) {
 		return MathsHelper.round(node.getWorldPosition().x, 2) - MathsHelper.round(box2dBody.getPosition().x, 2) > 0;
 	}
-	
+
 	/**
 	 * @param node
 	 * @return True if the specified node is above the enemy, False otherwise
@@ -106,17 +114,29 @@ public class Enemy implements Renderable {
 	private boolean isNodeAboveEnemy(Node node) {
 		return MathsHelper.round(node.getWorldPosition().y, 2) - MathsHelper.round(box2dBody.getPosition().y, 2) > 0;
 	}
-	
+
+	public void setNewPath() {
+		int startID = destinationID;
+		gameScreen.getRooms().breakInteractable(startID);
+
+		List<Integer> operationalIDs = gameScreen.getRooms().getOperationalIDs();
+
+		if (!operationalIDs.isEmpty()) {
+			setPath(startID, operationalIDs.get(0));
+		}
+	}
+
 	/**
 	 * Sets the path the enemy will take
 	 * 
 	 * @param start The index of the node where the path starts
-	 * @param end The index of the node where the path will end
+	 * @param end   The index of the node where the path will end
 	 */
 	public void setPath(int start, int end) {
 		pathfinding = new Pathfinding();
 		List<Node> interactables = gameScreen.getInteractables().getLocations();
 		path = pathfinding.findPath(interactables.get(start), interactables.get(end), gameScreen.getPathfinder());
+		destinationID = end;
 	}
 
 	/**
@@ -129,7 +149,7 @@ public class Enemy implements Renderable {
 		bodyDefinition.position.set(gameScreen.getInteractables().getLocations().get(0).getWorldPosition().x,
 				gameScreen.getInteractables().getLocations().get(0).getWorldPosition().y);
 		bodyDefinition.type = BodyDef.BodyType.DynamicBody;
-		
+
 		// Collisions
 		box2dBody = gameScreen.getWorld().createBody(bodyDefinition);
 		FixtureDef fixtureDefinition = new FixtureDef();
@@ -169,10 +189,10 @@ public class Enemy implements Renderable {
 
 		return "EnemyIdle";
 	}
-	
+
 	@Override
 	public boolean isMovingRight() {
-		return isNodeToRightOfEnemy(path.get(0));
+		return path.isEmpty() || isNodeToRightOfEnemy(path.get(0));
 	}
-	
+
 }

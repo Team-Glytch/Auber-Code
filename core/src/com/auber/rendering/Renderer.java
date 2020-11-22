@@ -1,6 +1,7 @@
 package com.auber.rendering;
 
 import com.auber.game.AuberGame;
+import com.auber.gameplay.GameScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

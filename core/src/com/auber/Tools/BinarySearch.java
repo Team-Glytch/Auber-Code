@@ -20,14 +20,17 @@ class BinarySearch {
 				mid = (lowerBound + upperBound) / 2;
 			}
 
-			if (MathsHelper.round(locations.get(mid).getWorldPosition().x, 2) == MathsHelper.round(x.getWorldPosition().x, 2)) {
+			if (MathsHelper.round(locations.get(mid).getWorldPosition().x, 2) == MathsHelper
+					.round(x.getWorldPosition().x, 2)) {
 				foundX = true;
-				if (MathsHelper.round(locations.get(mid).getWorldPosition().y, 2) == MathsHelper.round(x.getWorldPosition().y, 2)) {
+				if (MathsHelper.round(locations.get(mid).getWorldPosition().y, 2) == MathsHelper
+						.round(x.getWorldPosition().y, 2)) {
 
 					return mid;
 				}
 
-				if (MathsHelper.round(locations.get(mid).getWorldPosition().y, 2) < MathsHelper.round(x.getWorldPosition().y, 2)) {
+				if (MathsHelper.round(locations.get(mid).getWorldPosition().y, 2) < MathsHelper
+						.round(x.getWorldPosition().y, 2)) {
 					mid += 1;
 					lowerBound += 1;
 				} else {
@@ -39,11 +42,15 @@ class BinarySearch {
 				return -1;
 			}
 
-			if (MathsHelper.round(locations.get(mid).getWorldPosition().x, 2) < MathsHelper.round(x.getWorldPosition().x, 2)) {
-				lowerBound = mid + 1;
-
-			} else {
-				upperBound = mid - 1;
+			try {
+				if (MathsHelper.round(locations.get(mid).getWorldPosition().x, 2) < MathsHelper
+						.round(x.getWorldPosition().x, 2)) {
+					lowerBound = mid + 1;
+				} else {
+					upperBound = mid - 1;
+				}
+			} catch (IndexOutOfBoundsException e) {
+				return -1;
 			}
 
 		}

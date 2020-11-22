@@ -1,9 +1,11 @@
-package com.auber.rendering;
+package com.auber.gameplay;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.auber.game.AuberGame;
+import com.auber.rendering.AssetHandler;
+import com.auber.rendering.Renderable;
 import com.auber.tools.InteractableWorldCreator;
 import com.auber.tools.PathfindingWorldCreator;
 import com.badlogic.gdx.Screen;
@@ -44,6 +46,12 @@ public class GameScreen implements Screen {
 	private PathfindingWorldCreator pathfinder;
 	private InteractableWorldCreator interactables;
 
+	private Rooms rooms;
+	
+	public Rooms getRooms() {
+		return rooms;
+	}
+	
 	/**
 	 * The objects that are needed to be rendered
 	 */
@@ -62,6 +70,8 @@ public class GameScreen implements Screen {
 
 		interactables = new InteractableWorldCreator(map);
 
+		rooms = new Rooms(interactables.getLocations().size());
+		
 		pathfinder = new PathfindingWorldCreator(map);
 	}
 
