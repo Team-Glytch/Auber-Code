@@ -23,6 +23,7 @@ public class EnemyContactListener implements ContactListener {
 
 		checkIfObjectsArePlayerAndEnemy(o1, o2);
 		checkIfObjectsArePlayerAndEnemy(o2, o1);
+	
 	}
 
 	@Override

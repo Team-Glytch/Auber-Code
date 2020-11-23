@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.auber.entities.Enemy;
+import com.auber.entities.Player;
 import com.auber.game.AuberGame;
 import com.auber.rendering.AssetHandler;
 import com.auber.rendering.Renderable;
@@ -15,7 +16,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class GameScreen implements Screen {
@@ -41,19 +42,27 @@ public class GameScreen implements Screen {
 	private Viewport gamePort;
 
 	/**
-	 * The index of the renderable object that the camera is centred on
+	 * The index of the player in {@link #renderables}
 	 */
-	private int focusedRenderableIndex;
+	private int playerIndex;
 
 	private PathfindingWorldCreator pathfinder;
 	private InteractableWorldCreator interactables;
 
 	private Rooms rooms;
-
+	
 	public Rooms getRooms() {
 		return rooms;
 	}
 
+	public Player getPlayer() {
+		if (playerIndex == -1) {
+			return null;
+		}
+		
+		return (Player) renderables.get(playerIndex);
+	}
+	
 	/**
 	 * The objects that are needed to be rendered
 	 */
@@ -68,7 +77,7 @@ public class GameScreen implements Screen {
 
 		camera = setupCamera();
 
-		this.focusedRenderableIndex = -1;
+		this.playerIndex = -1;
 
 		TiledMap map = handler.getMap(mapName);
 
@@ -94,7 +103,7 @@ public class GameScreen implements Screen {
 	 */
 	private OrthographicCamera setupCamera() {
 		OrthographicCamera camera = new OrthographicCamera();
-		gamePort = new FitViewport(AuberGame.V_WIDTH / AuberGame.PixelsPerMetre,
+		gamePort = new ExtendViewport(AuberGame.V_WIDTH / AuberGame.PixelsPerMetre,
 				AuberGame.V_HEIGHT / AuberGame.PixelsPerMetre, camera);
 
 		camera.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
@@ -134,9 +143,9 @@ public class GameScreen implements Screen {
 	public void setFocusedRenderable(Renderable renderable) {
 		if (!this.renderables.contains(renderable)) {
 			this.renderables.add(renderable);
-			this.focusedRenderableIndex = this.renderables.size() - 1;
+			this.playerIndex = this.renderables.size() - 1;
 		} else {
-			this.focusedRenderableIndex = this.renderables.indexOf(renderable);
+			this.playerIndex = this.renderables.indexOf(renderable);
 		}
 	}
 
@@ -194,8 +203,8 @@ public class GameScreen implements Screen {
 	 * Updates the camera
 	 */
 	public void updateCamera() {
-		if (focusedRenderableIndex != -1) {
-			Renderable focusedRenderable = this.renderables.get(focusedRenderableIndex);
+		if (playerIndex != -1) {
+			Renderable focusedRenderable = this.renderables.get(playerIndex);
 
 			camera.position.x = focusedRenderable.getX();
 			camera.position.y = focusedRenderable.getY();
@@ -214,10 +223,10 @@ public class GameScreen implements Screen {
 		if (index != -1) {
 			renderables.remove(index);
 
-			if (focusedRenderableIndex == index) {
-				focusedRenderableIndex = -1;
-			} else if (focusedRenderableIndex > index) {
-				focusedRenderableIndex -= 1;
+			if (playerIndex == index) {
+				playerIndex = -1;
+			} else if (playerIndex > index) {
+				playerIndex -= 1;
 			}
 		}
 	}

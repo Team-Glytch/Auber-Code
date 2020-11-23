@@ -18,6 +18,8 @@ public class InteractableWorldCreator {
 	 */
 	private ArrayList<Node> locations;	
 
+	private ArrayList<Node> startLocations;
+	
 	/**
 	 * Sets up the locations of the interactable objects
 	 * 
@@ -34,6 +36,17 @@ public class InteractableWorldCreator {
 			locations.add(newNode);
 		}
 	
+		this.startLocations = new ArrayList<Node>();
+		for(MapObject object : map.getLayers().get("Start Locations").getObjects().getByType(RectangleMapObject.class)){			
+			Rectangle rect = ((RectangleMapObject) object).getRectangle();
+			Vector2 vPosition = new Vector2((rect.getX() + rect.getWidth() / 2) / AuberGame.PixelsPerMetre,(rect.getY() + rect.getHeight() / 2) / AuberGame.PixelsPerMetre);
+			Node newNode = new Node(vPosition);
+			startLocations.add(newNode);
+		}
+	}
+	
+	public ArrayList<Node> getStartLocations() {
+		return startLocations;
 	}
 	
 	/**

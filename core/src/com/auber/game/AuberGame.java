@@ -1,5 +1,8 @@
 package com.auber.game;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.auber.entities.Enemy;
 import com.auber.entities.Player;
 import com.auber.gameplay.GameScreen;
@@ -38,13 +41,17 @@ public class AuberGame extends Game {
 
 		GameScreen mainScreen = new GameScreen("SpaceStation", renderer.getHandler());
 
+		Player player = new Player(mainScreen);
+		mainScreen.setFocusedRenderable(player);
+		
+		List<Enemy> enemyList = new ArrayList<Enemy>();
+		
 		for (int i = 0; i < 8; i++) {
 			Enemy enemy = new Enemy(mainScreen, i);
+			enemyList.add(enemy);
 			mainScreen.addRenderable(enemy);
 		}
-
-		Player player = new Player(mainScreen.getWorld());
-		mainScreen.setFocusedRenderable(player);
+		
 		renderer.setScreen(mainScreen);
 	}
 

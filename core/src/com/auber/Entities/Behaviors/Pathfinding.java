@@ -4,20 +4,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 
+import com.auber.entities.Player;
+import com.auber.game.AuberGame;
 import com.auber.tools.MathsHelper;
 import com.auber.tools.PathfindingWorldCreator;
+import com.badlogic.gdx.math.Vector2;
 
 public class Pathfinding {
-
-	/**
-	 * The depth the algorithm will search for the solution
-	 */
-	private float depth;
-
-	/**
-	 * The structure containing the data about the paths in the map
-	 */
-	PathfindingWorldCreator pathfinder;
 
 	/**
 	 * @param startPosition
@@ -26,11 +19,11 @@ public class Pathfinding {
 	 * @return The shortest sequence of nodes that connects the nodes
 	 *         [startPosition] and [endPosition]
 	 */
-	public ArrayList<Node> findPath(Node startPosition, Node goalPosition, PathfindingWorldCreator pathfinder) {
-		this.pathfinder = pathfinder;
+	public static ArrayList<Node> findPath(Node startPosition, Node goalPosition, Player player,
+			PathfindingWorldCreator pathfinder) {
 		Node startNode = startPosition;
 		Node endNode = goalPosition;
-		depth = 0f;
+		float depth = 0f;
 
 		ArrayList<Node> openSet = new ArrayList<Node>();
 		HashSet<Node> closedSet = new HashSet<Node>();
@@ -48,22 +41,25 @@ public class Pathfinding {
 			}
 			openSet.remove(currentNode);
 			closedSet.add(currentNode);
-			if (MathsHelper.round(currentNode.getWorldPosition().x, 2) == MathsHelper.round(endNode.getWorldPosition().x, 2)
-					&& MathsHelper.round(currentNode.getWorldPosition().y, 2) == MathsHelper.round(endNode.getWorldPosition().y, 2)) {
+			if (MathsHelper.round(currentNode.getWorldPosition().x, 2) == MathsHelper
+					.round(endNode.getWorldPosition().x, 2)
+					&& MathsHelper.round(currentNode.getWorldPosition().y, 2) == MathsHelper
+							.round(endNode.getWorldPosition().y, 2)) {
 				return retracePath(startNode, currentNode);
 			}
 
 			for (Node neighbour : pathfinder.getNeighbours(currentNode)) {
-				if (closedSet.contains(neighbour)) {
-
+				if (closedSet.contains(neighbour) || isNodeInRangeOfPlayer(player, neighbour)) {
 					continue;
-
 				}
 
-				float newMovementCostToNeighbour = currentNode.gCost + getDistance(currentNode, neighbour);
+				float distance = MathsHelper.distanceBetween(currentNode.getWorldPosition(),
+						neighbour.getWorldPosition());
+				float newMovementCostToNeighbour = currentNode.gCost + distance;
 				if (newMovementCostToNeighbour < neighbour.gCost || !openSet.contains(neighbour)) {
 					neighbour.gCost = newMovementCostToNeighbour;
-					neighbour.hCost = getDistance(neighbour, endNode);
+					neighbour.hCost = MathsHelper.distanceBetween(neighbour.getWorldPosition(),
+							endNode.getWorldPosition());
 					neighbour.parent = currentNode;
 
 					if (!openSet.contains(neighbour)) {
@@ -80,12 +76,27 @@ public class Pathfinding {
 
 	}
 
+	public static boolean isNodeInRangeOfPlayer(Player player, Node node) {
+		float radius = 20 / AuberGame.PixelsPerMetre;
+
+		if (player != null) {
+			float distance = MathsHelper.distanceBetween(new Vector2(player.getX(), player.getY()),
+					node.getWorldPosition());
+
+			if (distance < radius) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	/**
 	 * @param startNode
 	 * @param endNode
 	 * @return A sequence of nodes
 	 */
-	public ArrayList<Node> retracePath(Node startNode, Node endNode) {
+	public static ArrayList<Node> retracePath(Node startNode, Node endNode) {
 		ArrayList<Node> path = new ArrayList<Node>();
 		Node currentNode = endNode;
 		while (currentNode != startNode) {
@@ -97,15 +108,4 @@ public class Pathfinding {
 		return path;
 	}
 
-	/**
-	 * @param nodeA
-	 * @param nodeB
-	 * @return The distance between [nodeA] and [nodeB]
-	 */
-	public float getDistance(Node nodeA, Node nodeB) {
-		float distanceX = MathsHelper.round(nodeA.getWorldPosition().x, 2) - MathsHelper.round(nodeB.getWorldPosition().x, 2);
-		float distanceY = MathsHelper.round(nodeA.getWorldPosition().y, 2) - MathsHelper.round(nodeB.getWorldPosition().y, 2);
-
-		return (float) Math.sqrt(distanceX * distanceX + distanceY * distanceY);
-	}
 }

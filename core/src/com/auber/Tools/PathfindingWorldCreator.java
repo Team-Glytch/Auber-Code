@@ -39,7 +39,7 @@ public class PathfindingWorldCreator {
 	public List<Node> getLocations() {
 		return locations;
 	}
-	
+
 	/**
 	 * @param node
 	 * @return A list of the neighbour nodes of [node]
@@ -56,6 +56,7 @@ public class PathfindingWorldCreator {
 				Vector2 checkV = new Vector2(checkX, checkY);
 				Node checkN = new Node(checkV);
 				int result = BinarySearch.search(locations, checkN);
+
 				if (result != -1) {
 					neighbours.add(locations.get(result));
 				}
