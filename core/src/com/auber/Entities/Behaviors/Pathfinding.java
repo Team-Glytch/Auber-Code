@@ -77,7 +77,7 @@ public class Pathfinding {
 	}
 
 	public static boolean isNodeInRangeOfPlayer(Player player, Node node) {
-		float radius = 20 / AuberGame.PixelsPerMetre;
+		float radius = 50 / AuberGame.PixelsPerMetre;
 
 		if (player != null) {
 			float distance = MathsHelper.distanceBetween(new Vector2(player.getX(), player.getY()),

@@ -66,18 +66,32 @@ public class Enemy implements Renderable {
 
 		if (!path.isEmpty()) {
 			move(path.get(0));
+		} else {
+			int nextDest = getNextDestID();
+
+			if (nextDest != -1) {
+				setPath(Node.getNearestNode(this.box2dBody.getPosition()), nextDest);
+			}
 		}
 	}
 
 	public void checkCurrentPath() {
 		if (path != null && !path.isEmpty()) {
-			Node node = path.get(0);
-			Player player = gameScreen.getPlayer();
-
-			if (Pathfinding.isNodeInRangeOfPlayer(player, node)) {
-				setPath(node, destinationID);
+			if (shouldRedoPath()) {
+				setPath(path.get(0), destinationID);
 			}
 		}
+	}
+
+	private boolean shouldRedoPath() {
+		for (int i = 0; i < 3 && i < path.size(); i++) {
+			if (Pathfinding.isNodeInRangeOfPlayer(gameScreen.getPlayer(), path.get(0))) {
+				return true;
+			}
+
+		}
+
+		return false;
 	}
 
 	/**
@@ -143,6 +157,16 @@ public class Enemy implements Renderable {
 
 		List<Integer> operationalIDs = gameScreen.getRooms().getOperationalIDs();
 
+		int nextDest = getNextDestID();
+
+		if (nextDest != -1) {
+			setPath(startID, operationalIDs.get(nextDest));
+		}
+	}
+
+	private int getNextDestID() {
+		List<Integer> operationalIDs = gameScreen.getRooms().getOperationalIDs();
+
 		int nextDest = -1;
 		float dist = Float.MAX_VALUE;
 
@@ -157,9 +181,7 @@ public class Enemy implements Renderable {
 
 		}
 
-		if (nextDest != -1) {
-			setPath(startID, operationalIDs.get(nextDest));
-		}
+		return nextDest;
 	}
 
 	public void setPath(Node fromNode, int end) {
