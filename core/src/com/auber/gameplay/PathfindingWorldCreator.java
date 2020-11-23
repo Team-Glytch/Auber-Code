@@ -1,10 +1,12 @@
-package com.auber.tools;
+package com.auber.gameplay;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.auber.entities.behaviors.Node;
 import com.auber.game.AuberGame;
+import com.auber.tools.BinarySearch;
+import com.auber.tools.QuickSort;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;

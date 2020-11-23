@@ -2322,13 +2322,13 @@
   <object id="2851" x="816" y="768" width="16" height="16"/>
  </objectgroup>
  <objectgroup color="#ff55ff" id="15" name="Teleporters">
-  <object id="2853" x="672" y="864" width="16" height="16"/>
-  <object id="2854" x="864" y="672" width="16" height="16"/>
-  <object id="2855" x="672" y="672" width="16" height="16"/>
-  <object id="2856" x="864" y="864" width="16" height="16"/>
-  <object id="2857" x="416" y="1120" width="16" height="16"/>
-  <object id="2858" x="1120" y="1120" width="16" height="16"/>
-  <object id="2859" x="416" y="416" width="16" height="16"/>
-  <object id="2860" x="1120" y="416" width="16" height="16"/>
+  <object id="2853" name="6" x="672" y="864" width="16" height="16"/>
+  <object id="2854" name="2" x="864" y="672" width="16" height="16"/>
+  <object id="2855" name="0" x="672" y="672" width="16" height="16"/>
+  <object id="2856" name="4" x="864" y="864" width="16" height="16"/>
+  <object id="2857" name="7" x="416" y="1120" width="16" height="16"/>
+  <object id="2858" name="5" x="1120" y="1120" width="16" height="16"/>
+  <object id="2859" name="1" x="416" y="416" width="16" height="16"/>
+  <object id="2860" name="3" x="1120" y="416" width="16" height="16"/>
  </objectgroup>
 </map>

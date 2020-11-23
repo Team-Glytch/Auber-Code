@@ -6,8 +6,8 @@ import java.util.HashSet;
 
 import com.auber.entities.Player;
 import com.auber.game.AuberGame;
+import com.auber.gameplay.PathfindingWorldCreator;
 import com.auber.tools.MathsHelper;
-import com.auber.tools.PathfindingWorldCreator;
 import com.badlogic.gdx.math.Vector2;
 
 public class Pathfinding {

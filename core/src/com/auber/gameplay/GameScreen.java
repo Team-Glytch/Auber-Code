@@ -8,8 +8,6 @@ import com.auber.entities.Player;
 import com.auber.game.AuberGame;
 import com.auber.rendering.AssetHandler;
 import com.auber.rendering.Renderable;
-import com.auber.tools.InteractableWorldCreator;
-import com.auber.tools.PathfindingWorldCreator;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -47,7 +45,7 @@ public class GameScreen implements Screen {
 	private int playerIndex;
 
 	private PathfindingWorldCreator pathfinder;
-	private InteractableWorldCreator interactables;
+	private InteractableHandler interactables;
 
 	private Rooms rooms;
 	
@@ -73,7 +71,7 @@ public class GameScreen implements Screen {
 		this.renderables = new ArrayList<Renderable>();
 
 		this.world = new World(new Vector2(0, 0), true);
-		this.world.setContactListener(new EnemyContactListener(this));
+		this.world.setContactListener(new WorldContactListener(this));
 
 		camera = setupCamera();
 
@@ -81,7 +79,7 @@ public class GameScreen implements Screen {
 
 		TiledMap map = handler.getMap(mapName);
 
-		interactables = new InteractableWorldCreator(map);
+		interactables = new InteractableHandler(map, world);
 
 		rooms = new Rooms(interactables.getLocations().size());
 
@@ -168,7 +166,7 @@ public class GameScreen implements Screen {
 	/**
 	 * @return The interactable objects in the screen's world
 	 */
-	public InteractableWorldCreator getInteractables() {
+	public InteractableHandler getInteractables() {
 		return interactables;
 	}
 

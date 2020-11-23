@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.auber.entities.behaviors.Node;
 
-class BinarySearch {
+public class BinarySearch {
 
 	/**
 	 * @param locations

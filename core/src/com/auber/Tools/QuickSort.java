@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.auber.entities.behaviors.Node;
 
-class QuickSort {
+public class QuickSort {
 
 	private static int partition(List<Node> path, int low, int high) {
 		float pivot = path.get(high).getWorldPosition().x;

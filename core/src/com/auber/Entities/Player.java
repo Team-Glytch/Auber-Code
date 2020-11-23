@@ -2,6 +2,7 @@ package com.auber.entities;
 
 import com.auber.game.AuberGame;
 import com.auber.gameplay.GameScreen;
+import com.auber.gameplay.WorldContactListener;
 import com.auber.rendering.Renderable;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -26,14 +27,13 @@ public class Player implements Renderable {
 	 */
 	public Player(GameScreen gameScreen) {
 		this.gameScreen = gameScreen;
-		this.box2dBody = definePlayer();
+		this.box2dBody = definePlayer(gameScreen.getInteractables().getStartLocations().get(0).getWorldPosition());
 	}
 
 	/**
 	 * @return The box defining the shape and position of the player
 	 */
-	private Body definePlayer() {
-		Vector2 loc = gameScreen.getInteractables().getStartLocations().get(0).getWorldPosition();
+	private Body definePlayer(Vector2 loc) {
 
 		// Position and Type
 		BodyDef bodyDefinition = new BodyDef();
@@ -47,7 +47,8 @@ public class Player implements Renderable {
 		CircleShape shape = new CircleShape();
 		shape.setRadius(8 / AuberGame.PixelsPerMetre);
 		fixtureDefinition.shape = shape;
-		fixtureDefinition.filter.categoryBits = 0x0010;
+		fixtureDefinition.filter.categoryBits = WorldContactListener.PLAYER_BIT;
+		fixtureDefinition.filter.maskBits = WorldContactListener.ENEMY_BIT | WorldContactListener.TELEPORTER_BIT;
 		box2dBody.createFixture(fixtureDefinition);
 
 		return box2dBody;
@@ -134,5 +135,17 @@ public class Player implements Renderable {
 	@Override
 	public boolean isMovingRight() {
 		return !isMoving() || box2dBody.getLinearVelocity().x >= 0;
+	}
+
+	public void teleport(final float x, final float y) {
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				while(gameScreen.getWorld().isLocked()) {
+				}
+				box2dBody.setTransform(x, y, 0);
+			}
+		}).start();
 	}
 }

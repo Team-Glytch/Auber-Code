@@ -7,6 +7,7 @@ import com.auber.entities.behaviors.Node;
 import com.auber.entities.behaviors.Pathfinding;
 import com.auber.game.AuberGame;
 import com.auber.gameplay.GameScreen;
+import com.auber.gameplay.WorldContactListener;
 import com.auber.rendering.Renderable;
 import com.auber.tools.MathsHelper;
 import com.badlogic.gdx.math.Vector2;
@@ -198,8 +199,8 @@ public class Enemy implements Renderable {
 		shape.setRadius(8 / AuberGame.PixelsPerMetre);
 		fixtureDefinition.shape = shape;
 		// Prevents enemies from colliding with each other
-		fixtureDefinition.filter.categoryBits = 0x0001;
-		fixtureDefinition.filter.maskBits = 0x0010;
+		fixtureDefinition.filter.categoryBits = WorldContactListener.ENEMY_BIT;
+		fixtureDefinition.filter.maskBits = WorldContactListener.PLAYER_BIT;
 		box2dBody.createFixture(fixtureDefinition);
 
 		box2dBody.setUserData(this);
