@@ -4,8 +4,6 @@ import com.auber.rendering.Renderer;
 import com.auber.screens.MainMenuScreen;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
 
 public class AuberGame extends Game {
 	/**
@@ -25,9 +23,6 @@ public class AuberGame extends Game {
 	 * Height of the screen
 	 */
 	public static final float V_HEIGHT = 720;
-	
-	public SpriteBatch batch;
-	public MenuCamera cam;
 
 	/**
 	 * Initialise world
