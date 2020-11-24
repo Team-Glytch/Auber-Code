@@ -47,6 +47,7 @@ public class Renderer {
 		batch = new SpriteBatch();
 		handler = new AssetHandler();
 		mapRenderer = new OrthogonalTiledMapRenderer(null, 1 / AuberGame.PixelsPerMetre);
+		
 	}
 
 	public SpriteBatch getBatch() {
@@ -124,6 +125,7 @@ public class Renderer {
 			}
 		}
 		batch.end();
+		
 	}
 
 	/**
