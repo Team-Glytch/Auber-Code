@@ -1,10 +1,10 @@
-package com.auber.Entities.abilities;
+package com.auber.entities.abilities;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.auber.Entities.Enemy;
-import com.auber.Entities.Player;
+import com.auber.entities.Enemy;
+import com.auber.entities.Player;
 
 public class InvisibleAbility implements SpecialAbility {
 

@@ -3,7 +3,7 @@ package com.auber.tiles;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.auber.Entities.Player;
+import com.auber.entities.Player;
 import com.auber.gameplay.GameScreen;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.physics.box2d.World;

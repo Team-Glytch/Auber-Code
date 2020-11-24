@@ -2,8 +2,8 @@ package com.auber.tiles;
 
 import java.util.List;
 
-import com.auber.Entities.Player;
-import com.auber.Entities.Behaviors.Node;
+import com.auber.entities.Player;
+import com.auber.entities.behaviors.Node;
 import com.auber.gameplay.GameScreen;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Vector2;

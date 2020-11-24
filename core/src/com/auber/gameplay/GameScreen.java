@@ -3,8 +3,8 @@ package com.auber.gameplay;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.auber.Entities.Enemy;
-import com.auber.Entities.Player;
+import com.auber.entities.Enemy;
+import com.auber.entities.Player;
 import com.auber.game.AuberGame;
 import com.auber.rendering.AssetHandler;
 import com.auber.rendering.Renderable;
