@@ -1,7 +1,7 @@
 package com.auber.rendering;
 
 import com.auber.game.AuberGame;
-import com.auber.gameplay.GameScreen;
+import com.auber.screens.GameScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -49,6 +49,10 @@ public class Renderer {
 		mapRenderer = new OrthogonalTiledMapRenderer(null, 1 / AuberGame.PixelsPerMetre);
 	}
 
+	public SpriteBatch getBatch() {
+		return batch;
+	}
+	
 	/**
 	 * @return The asset handler of the renderer
 	 */
@@ -89,12 +93,15 @@ public class Renderer {
 	public void render() {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		batch.setProjectionMatrix(currentScreen.getCamera().combined);
+		
 		batch.begin();
 
 		mapRenderer.setView(currentScreen.getCamera());
 		mapRenderer.render();
 
 		currentScreen.updateCamera();
+		
 
 		for (Renderable renderable : currentScreen.getRenderables()) {
 			if (renderable.isVisible()) {
@@ -116,7 +123,6 @@ public class Renderer {
 				}
 			}
 		}
-		batch.setProjectionMatrix(currentScreen.getCamera().combined);
 		batch.end();
 	}
 

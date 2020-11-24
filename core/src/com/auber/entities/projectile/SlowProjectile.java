@@ -5,9 +5,9 @@ import java.util.TimerTask;
 
 import com.auber.entities.Player;
 import com.auber.game.AuberGame;
-import com.auber.gameplay.GameScreen;
 import com.auber.gameplay.WorldContactListener;
 import com.auber.rendering.Renderable;
+import com.auber.screens.GameScreen;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;

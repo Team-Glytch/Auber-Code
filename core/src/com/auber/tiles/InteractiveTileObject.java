@@ -2,8 +2,8 @@ package com.auber.tiles;
 
 import com.auber.entities.Player;
 import com.auber.game.AuberGame;
-import com.auber.gameplay.GameScreen;
 import com.auber.gameplay.WorldContactListener;
+import com.auber.screens.GameScreen;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;

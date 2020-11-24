@@ -3,7 +3,7 @@ package com.auber.entities.abilities;
 import com.auber.entities.Enemy;
 import com.auber.entities.Player;
 import com.auber.entities.projectile.SlowProjectile;
-import com.auber.gameplay.GameScreen;
+import com.auber.screens.GameScreen;
 import com.badlogic.gdx.math.Vector2;
 
 public class SlowAbility implements SpecialAbility {

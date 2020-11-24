@@ -1,16 +1,7 @@
 package com.auber.game;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.auber.entities.Enemy;
-import com.auber.entities.Player;
-import com.auber.entities.abilities.DamageProjectileAbility;
-import com.auber.entities.abilities.InvisibleAbility;
-import com.auber.entities.abilities.SlowAbility;
-import com.auber.entities.abilities.SpecialAbility;
-import com.auber.gameplay.GameScreen;
 import com.auber.rendering.Renderer;
+import com.auber.screens.MainMenuScreen;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 
@@ -42,36 +33,7 @@ public class AuberGame extends Game {
 		renderer.addTextures("assets/Sprites/");
 		renderer.addMaps("assets/Maps/");
 
-		GameScreen mainScreen = new GameScreen("SpaceStation", renderer.getHandler());
-
-		Player player = new Player(mainScreen);
-		mainScreen.setFocusedRenderable(player);
-
-		List<Enemy> enemyList = new ArrayList<Enemy>();
-
-		for (int i = 0; i < 8; i++) {
-			SpecialAbility ability = null;
-
-			switch (i % 3) {
-			case 0:
-				ability = new InvisibleAbility();
-				break;
-			case 1:
-				ability = new SlowAbility(mainScreen);
-				break;
-			case 2:
-				ability = new DamageProjectileAbility(mainScreen);
-				break;
-			default:
-				break;
-			}
-			
-			Enemy enemy = new Enemy(mainScreen, ability, i);
-			enemyList.add(enemy);
-			mainScreen.addRenderable(enemy);
-		}
-
-		renderer.setScreen(mainScreen);
+		setScreen(new MainMenuScreen(renderer));
 	}
 
 	/**
@@ -79,15 +41,19 @@ public class AuberGame extends Game {
 	 */
 	@Override
 	public void render() {
-		if (this.getScreen() == null || renderer.getCurrentScreen().equals(this.getScreen())) {
-			setScreen(renderer.getCurrentScreen());
+		if (renderer.getCurrentScreen() != null) {
+			if (this.getScreen() == null || !renderer.getCurrentScreen().equals(this.getScreen())) {
+				setScreen(renderer.getCurrentScreen());
+			}
+
+			renderer.getCurrentScreen().update(Gdx.graphics.getDeltaTime());
+
+			renderer.getCurrentScreen().getWorld().step(1 / 60f, 6, 2);
+
+			renderer.render();
+		} else {
+			super.render();
 		}
-
-		renderer.getCurrentScreen().update(Gdx.graphics.getDeltaTime());
-
-		renderer.getCurrentScreen().getWorld().step(1 / 60f, 6, 2);
-
-		renderer.render();
 	}
 
 	/**
@@ -97,4 +63,5 @@ public class AuberGame extends Game {
 	public void dispose() {
 		renderer.dispose();
 	}
+
 }

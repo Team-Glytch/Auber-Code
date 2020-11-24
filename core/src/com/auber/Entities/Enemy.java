@@ -9,9 +9,9 @@ import com.auber.entities.abilities.SpecialAbility;
 import com.auber.entities.behaviors.Node;
 import com.auber.entities.behaviors.Pathfinding;
 import com.auber.game.AuberGame;
-import com.auber.gameplay.GameScreen;
 import com.auber.gameplay.WorldContactListener;
 import com.auber.rendering.Renderable;
+import com.auber.screens.GameScreen;
 import com.auber.tools.MathsHelper;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -193,7 +193,7 @@ public class Enemy implements Renderable {
 						canMove = true;
 						timer.cancel();
 					}
-				}, 3000);
+				}, 5000);
 			}
 		} else {
 			// Checks if the enemy has reached the y coordinate of the node

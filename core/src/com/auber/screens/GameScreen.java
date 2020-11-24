@@ -1,4 +1,4 @@
-package com.auber.gameplay;
+package com.auber.screens;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,12 +6,17 @@ import java.util.List;
 import com.auber.entities.Enemy;
 import com.auber.entities.Player;
 import com.auber.game.AuberGame;
+import com.auber.gameplay.PathfindingWorldCreator;
+import com.auber.gameplay.Rooms;
+import com.auber.gameplay.WorldContactListener;
 import com.auber.rendering.AssetHandler;
 import com.auber.rendering.Renderable;
 import com.auber.tiles.InteractableHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
@@ -49,7 +54,7 @@ public class GameScreen implements Screen {
 	 * The pathfinder of the screen
 	 */
 	private PathfindingWorldCreator pathfinder;
-	
+
 	/**
 	 * The interactable tiles in the screen
 	 */
@@ -80,7 +85,7 @@ public class GameScreen implements Screen {
 		this.playerIndex = -1;
 
 		TiledMap map = handler.getMap(mapName);
-
+		
 		interactables = new InteractableHandler(map, world);
 
 		rooms = new Rooms(interactables.getLocations().size());
@@ -122,7 +127,7 @@ public class GameScreen implements Screen {
 	public void update(float deltaTime) {
 		renderables.addAll(renderableBuffer);
 		renderableBuffer.clear();
-		
+
 		for (Renderable renderable : renderables) {
 			renderable.update(deltaTime);
 		}
@@ -137,7 +142,7 @@ public class GameScreen implements Screen {
 			Gdx.app.exit();
 		}
 	}
-
+	
 	/**
 	 * Sets the renderable object that the camera is centred on
 	 * 
