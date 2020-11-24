@@ -11,15 +11,37 @@ import com.badlogic.gdx.physics.box2d.World;
 
 public class Teleporter extends InteractiveTileObject {
 
+	/**
+	 * The x coordinate of the teleporter
+	 */
 	private float x;
+	
+	/**
+	 * The y coordinate of the teleporter
+	 */
 	private float y;
 
+	/**
+	 * Creates the teleporter
+	 * 
+	 * @param world The world the teleporter is in
+	 * @param object The tile information of the teleporter
+	 * @param x
+	 * @param y
+	 */
 	public Teleporter(World world, MapObject object, float x, float y) {
 		super(world, object);
 
 		fixture.setUserData(this);
 		this.x = x;
 		this.y = y;
+	}
+
+	/**
+	 * @return The position of the teleporter on the map
+	 */
+	public Vector2 getPosition() {
+		return new Vector2(x, y);
 	}
 
 	@Override
@@ -43,10 +65,6 @@ public class Teleporter extends InteractiveTileObject {
 		Vector2 newPosition = nextNode.getWorldPosition().cpy().add(dif.scl(0.5f));
 		
 		player.teleport(newPosition.x, newPosition.y);
-	}
-
-	public Vector2 getPosition() {
-		return new Vector2(x, y);
 	}
 
 }

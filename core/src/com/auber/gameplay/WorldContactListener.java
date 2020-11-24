@@ -18,8 +18,16 @@ public class WorldContactListener implements ContactListener {
 	public static final short ENEMY_BIT = 8;
 	public static final short PROJECTILE_BIT = 16;
 
+	/**
+	 * The screen that the collisions happen in
+	 */
 	private GameScreen screen;
 
+	/**
+	 * Creates the contact listener
+	 * 
+	 * @param screen
+	 */
 	public WorldContactListener(GameScreen screen) {
 		this.screen = screen;
 	}

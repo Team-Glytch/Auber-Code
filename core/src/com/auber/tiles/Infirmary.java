@@ -10,6 +10,12 @@ import com.badlogic.gdx.physics.box2d.World;
 
 public class Infirmary extends InteractiveTileObject {
 
+	/**
+	 * Creates the infirmary tile
+	 * 
+	 * @param world The world the tile in in
+	 * @param object The information about the shape and position of the tile
+	 */
 	public Infirmary(World world, MapObject object) {
 		super(world, object);
 	}

@@ -16,9 +16,22 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 
 public class SlowProjectile implements Renderable, Projectile {
 
+	/**
+	 * The screen
+	 */
 	private GameScreen gameScreen;
+	/**
+	 * The body defining position and bounding box of the projectile
+	 */
 	private Body box2dBody;
 
+	/**
+	 * Creates the slow projectile
+	 * 
+	 * @param screen
+	 * @param pos Where the projectile will spawn
+	 * @param target Where the projectile will fire towards
+	 */
 	public SlowProjectile(GameScreen screen, Vector2 pos, Vector2 target) {
 		this.gameScreen = screen;
 		defineEnemy(pos);
@@ -26,37 +39,11 @@ public class SlowProjectile implements Renderable, Projectile {
 		screen.addRenderable(this);
 	}
 
-	@Override
-	public void collide(final Player player) {
-		if (player.getSpeed() == 1.0f) {
-			player.setSpeed(0.1f);
-
-			final Timer timer = new Timer();
-			timer.schedule(new TimerTask() {
-
-				@Override
-				public void run() {
-					player.setSpeed(1.0f);
-					timer.cancel();
-				}
-			}, 5 * 1000);
-		}
-	}
-
-	private void fire(Vector2 target) {
-		Vector2 dif = target.cpy().sub(box2dBody.getPosition());
-		float magnitude = dif.len();
-		float unitX = dif.x / magnitude;
-		float unitY = dif.y / magnitude;
-
-		float speed = 1;
-
-		Vector2 vel = new Vector2(unitX * speed, unitY * speed);
-
-		this.box2dBody.setLinearVelocity(vel);
-
-	}
-
+	/**
+	 * Defines the position and bounding box of the projectile
+	 * 
+	 * @param loc The location the projectile will spawn at
+	 */
 	public void defineEnemy(Vector2 loc) {
 		// Position and type
 		BodyDef bodyDefinition = new BodyDef();
@@ -75,6 +62,38 @@ public class SlowProjectile implements Renderable, Projectile {
 		box2dBody.createFixture(fixtureDefinition);
 
 		box2dBody.setUserData(this);
+	}
+
+	@Override
+	public void fire(Vector2 target) {
+		Vector2 dif = target.cpy().sub(box2dBody.getPosition());
+		float magnitude = dif.len();
+		float unitX = dif.x / magnitude;
+		float unitY = dif.y / magnitude;
+
+		float speed = 1;
+
+		Vector2 vel = new Vector2(unitX * speed, unitY * speed);
+
+		this.box2dBody.setLinearVelocity(vel);
+
+	}
+
+	@Override
+	public void collide(final Player player) {
+		if (player.getSpeed() == 1.0f) {
+			player.setSpeed(0.1f);
+
+			final Timer timer = new Timer();
+			timer.schedule(new TimerTask() {
+
+				@Override
+				public void run() {
+					player.setSpeed(1.0f);
+					timer.cancel();
+				}
+			}, 5 * 1000);
+		}
 	}
 
 	@Override

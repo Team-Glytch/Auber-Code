@@ -108,12 +108,9 @@ public class Enemy implements Renderable {
 
 	@Override
 	public void update(float deltaTime) {
-		if (!isDead) {
+		if (!isDead && canMove) {
 			updateAbility();
-
-			if (canMove) {
-				updatePathing();
-			}
+			updatePathing();
 		}
 	}
 
@@ -257,7 +254,7 @@ public class Enemy implements Renderable {
 			setPath(startID, operationalIDs.get(nextDest));
 		}
 	}
-	
+
 	/**
 	 * @return The ID of the closest operable interactable the enemy can reach
 	 */
@@ -285,7 +282,7 @@ public class Enemy implements Renderable {
 	 * Sets a path from a node to an interactable
 	 * 
 	 * @param fromNode The node the enemy is standing on
-	 * @param end The ID of the interactable the enemy wants to go to
+	 * @param end      The ID of the interactable the enemy wants to go to
 	 */
 	private void setPath(Node fromNode, int end) {
 		List<Node> interactables = gameScreen.getInteractables().getLocations();

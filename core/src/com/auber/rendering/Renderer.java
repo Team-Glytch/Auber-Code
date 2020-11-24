@@ -49,6 +49,9 @@ public class Renderer {
 		mapRenderer = new OrthogonalTiledMapRenderer(null, 1 / AuberGame.PixelsPerMetre);
 	}
 
+	/**
+	 * @return The asset handler of the renderer
+	 */
 	public AssetHandler getHandler() {
 		return handler;
 	}

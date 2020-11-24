@@ -45,22 +45,20 @@ public class GameScreen implements Screen {
 	 */
 	private int playerIndex;
 
+	/**
+	 * The pathfinder of the screen
+	 */
 	private PathfindingWorldCreator pathfinder;
+	
+	/**
+	 * The interactable tiles in the screen
+	 */
 	private InteractableHandler interactables;
 
+	/**
+	 * The various rooms of the screen
+	 */
 	private Rooms rooms;
-
-	public Rooms getRooms() {
-		return rooms;
-	}
-
-	public Player getPlayer() {
-		if (playerIndex == -1) {
-			return null;
-		}
-
-		return (Player) renderables.get(playerIndex);
-	}
 
 	/**
 	 * The objects that are needed to be rendered
@@ -124,7 +122,7 @@ public class GameScreen implements Screen {
 	public void update(float deltaTime) {
 		renderables.addAll(renderableBuffer);
 		renderableBuffer.clear();
-
+		
 		for (Renderable renderable : renderables) {
 			renderable.update(deltaTime);
 		}
@@ -171,10 +169,28 @@ public class GameScreen implements Screen {
 	}
 
 	/**
-	 * @return The interactable objects in the screen's world
+	 * @return {@link #interactables}
 	 */
 	public InteractableHandler getInteractables() {
 		return interactables;
+	}
+
+	/**
+	 * @return {@link #rooms}
+	 */
+	public Rooms getRooms() {
+		return rooms;
+	}
+
+	/**
+	 * @return The player in the screen
+	 */
+	public Player getPlayer() {
+		if (playerIndex == -1) {
+			return null;
+		}
+
+		return (Player) renderables.get(playerIndex);
 	}
 
 	/**
@@ -191,17 +207,11 @@ public class GameScreen implements Screen {
 		return mapName;
 	}
 
+	/**
+	 * @return {@link #world}
+	 */
 	public World getWorld() {
 		return world;
-	}
-
-	@Override
-	public void show() {
-
-	}
-
-	@Override
-	public void render(float delta) {
 	}
 
 	/**
@@ -234,6 +244,15 @@ public class GameScreen implements Screen {
 				playerIndex -= 1;
 			}
 		}
+	}
+
+	@Override
+	public void show() {
+
+	}
+
+	@Override
+	public void render(float delta) {
 	}
 
 	@Override

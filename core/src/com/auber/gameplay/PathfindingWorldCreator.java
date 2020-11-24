@@ -15,9 +15,22 @@ import com.badlogic.gdx.math.Vector2;
 
 public class PathfindingWorldCreator {
 
+	/**
+	 * The path finding nodes on the map
+	 */
 	private List<Node> locations;
+
+	/**
+	 * The structure of the nodes on the map All the nodes on the same x-coordinate
+	 * are stored in the internal
+	 */
 	private ArrayList<ArrayList<Node>> locationBreakdown;
 
+	/**
+	 * Creates the pathfinding from the tiled map
+	 * 
+	 * @param map
+	 */
 	public PathfindingWorldCreator(TiledMap map) {
 		this.locations = new ArrayList<Node>();
 
@@ -52,6 +65,10 @@ public class PathfindingWorldCreator {
 
 	}
 
+	/**
+	 * @param node
+	 * @return The 4 direct neighbours of [node]
+	 */
 	public ArrayList<Node> getNeighbours(Node node) {
 		ArrayList<Node> neighbours = new ArrayList<Node>();
 		for (int x = -1; x <= 1; x++) {
@@ -63,12 +80,9 @@ public class PathfindingWorldCreator {
 				float checkY = node.getWorldPosition().y + (y * 0.16f);
 				Vector2 checkV = new Vector2(checkX, checkY);
 				Node checkN = new Node(checkV);
-				int resultX = BinarySearch.search(locationBreakdown, checkN);
-				if (resultX != -1) {
-					int resultY = BinarySearch.searchY(locationBreakdown.get(resultX), checkN);
-					if (resultY != -1) {
-						neighbours.add(locationBreakdown.get(resultX).get(resultY));
-					}
+				int[] result = BinarySearch.search(locationBreakdown, checkN);
+				if (result[0] != -1) {
+					neighbours.add(locationBreakdown.get(result[0]).get(result[1]));
 				}
 
 			}

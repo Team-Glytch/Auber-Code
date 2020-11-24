@@ -8,11 +8,30 @@ import com.auber.entities.behaviors.Node;
 public class BinarySearch {
 
 	/**
+	 * int[] { index of outer array list, index of inner array list }
+	 * 
+	 * @param locationBreakdown
+	 * @param node
+	 * @return The indices of the node within location breakdown
+	 */
+	public static int[] search(ArrayList<ArrayList<Node>> locationBreakdown, Node node) {
+		int resultX = BinarySearch.searchX(locationBreakdown, node);
+		if (resultX != -1) {
+			int resultY = BinarySearch.searchY(locationBreakdown.get(resultX), node);
+			if (resultY != -1) {
+				return new int[] { resultX, resultY };
+			}
+		}
+
+		return new int[] { -1, -1 };
+	}
+
+	/**
 	 * @param locationBreakdown
 	 * @param x
 	 * @return The index of node [x] within [locations]
 	 */
-	public static int search(ArrayList<ArrayList<Node>> locationBreakdown, Node x) {
+	private static int searchX(ArrayList<ArrayList<Node>> locationBreakdown, Node x) {
 		int lowerBound = 0, upperBound = (locationBreakdown.size() - 1);
 		int mid = 0;
 		while (lowerBound <= upperBound) {
@@ -38,7 +57,14 @@ public class BinarySearch {
 		return -1;
 	}
 
-	public static int searchY(List<Node> locations, Node y) {
+	/**
+	 * The search is done in terms of the node's y coordinate
+	 * 
+	 * @param locations
+	 * @param y
+	 * @return The index of the node within the locations
+	 */
+	private static int searchY(List<Node> locations, Node y) {
 		int lowerBound = 0, upperBound = (locations.size() - 1);
 		int mid = 0;
 		while (lowerBound <= upperBound) {

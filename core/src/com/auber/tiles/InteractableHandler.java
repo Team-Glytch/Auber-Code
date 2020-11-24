@@ -21,10 +21,20 @@ public class InteractableHandler {
 	 */
 	private ArrayList<Node> locations;
 
+	/**
+	 * The nodes at which the enemies and player first spawn in
+	 */
 	private ArrayList<Node> startLocations;
-	
+
+	/**
+	 * The locations where the enemies are sent to when captured
+	 */
 	private ArrayList<Node> brigLocations;
 
+	/**
+	 * The locations of the teleporters in the map. 
+	 * Teleporters are paired with their neighbour, e.g. 0-1, 2-3, etc.
+	 */
 	private ArrayList<Teleporter> teleporters;
 
 	/**
@@ -69,10 +79,9 @@ public class InteractableHandler {
 			Teleporter teleporter = new Teleporter(world, object, vPosition.x, vPosition.y);
 			teleporters.set(index, teleporter);
 		}
-		
+
 		this.brigLocations = new ArrayList<Node>();
-		for (MapObject object : map.getLayers().get("Brig").getObjects()
-				.getByType(RectangleMapObject.class)) {
+		for (MapObject object : map.getLayers().get("Brig").getObjects().getByType(RectangleMapObject.class)) {
 			Rectangle rect = ((RectangleMapObject) object).getRectangle();
 			Vector2 vPosition = getPosition(rect);
 			Node newNode = new Node(vPosition);
@@ -82,21 +91,33 @@ public class InteractableHandler {
 		RectangleMapObject infirmiryRect = map.getLayers().get("Infirmary").getObjects()
 				.getByType(RectangleMapObject.class).first();
 		new Infirmary(world, infirmiryRect);
-		
+
 	}
-	
+
+	/**
+	 * Jails the specified enemy
+	 * 
+	 * @param enemy
+	 */
 	public void jail(Enemy enemy) {
 		Vector2 loc = brigLocations.get(enemy.getID()).getWorldPosition();
-		
+
 		enemy.teleport(loc.x, loc.y);
 		enemy.kill();
 	}
 
+	/**
+	 * @param rect
+	 * @return The position of [rect] as a vector
+	 */
 	private Vector2 getPosition(Rectangle rect) {
 		return new Vector2((rect.getX() + rect.getWidth() / 2) / AuberGame.PixelsPerMetre,
 				(rect.getY() + rect.getHeight() / 2) / AuberGame.PixelsPerMetre);
 	}
 
+	/**
+	 * @return {@link #startLocations}
+	 */
 	public ArrayList<Node> getStartLocations() {
 		return startLocations;
 	}
@@ -108,6 +129,9 @@ public class InteractableHandler {
 		return this.locations;
 	}
 
+	/**
+	 * @return {@link #teleporters}
+	 */
 	public ArrayList<Teleporter> getTeleporters() {
 		return teleporters;
 	}

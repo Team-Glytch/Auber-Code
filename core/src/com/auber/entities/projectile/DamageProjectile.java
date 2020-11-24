@@ -36,20 +36,6 @@ public class DamageProjectile implements Renderable, Projectile {
 		screen.addRenderable(this);
 	}
 
-	private void fire(Vector2 target) {
-		Vector2 dif = target.cpy().sub(box2dBody.getPosition());
-		float magnitude = dif.len();
-		float unitX = dif.x / magnitude;
-		float unitY = dif.y / magnitude;
-
-		float speed = 0.8f;
-
-		Vector2 vel = new Vector2(unitX * speed, unitY * speed);
-
-		this.box2dBody.setLinearVelocity(vel);
-
-	}
-
 	/**
 	 * Defines the position and bounding box of the projectile
 	 * 
@@ -81,8 +67,21 @@ public class DamageProjectile implements Renderable, Projectile {
 
 		player.setHealth(player.getHealth() - dmg);
 
-		System.out.println(player.getHealth());
-		
+	}
+	
+	@Override
+	public void fire(Vector2 target) {
+		Vector2 dif = target.cpy().sub(box2dBody.getPosition());
+		float magnitude = dif.len();
+		float unitX = dif.x / magnitude;
+		float unitY = dif.y / magnitude;
+
+		float speed = 0.8f;
+
+		Vector2 vel = new Vector2(unitX * speed, unitY * speed);
+
+		this.box2dBody.setLinearVelocity(vel);
+
 	}
 
 	@Override

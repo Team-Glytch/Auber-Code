@@ -6,6 +6,12 @@ import com.auber.entities.behaviors.Node;
 
 public class QuickSort {
 
+	/**
+	 * @param path
+	 * @param low
+	 * @param high
+	 * @return The partition of the next sort
+	 */
 	private static int partition(List<Node> path, int low, int high) {
 		float pivot = path.get(high).getWorldPosition().x;
 		float pivotY = path.get(high).getWorldPosition().y;

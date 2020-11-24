@@ -15,7 +15,9 @@ public class Pathfinding {
 	/**
 	 * @param startPosition
 	 * @param goalPosition
+	 * @param player The player that may block the path
 	 * @param pathfinder
+	 * 
 	 * @return The shortest sequence of nodes that connects the nodes
 	 *         [startPosition] and [endPosition]
 	 */
@@ -76,6 +78,11 @@ public class Pathfinding {
 
 	}
 
+	/**
+	 * @param player
+	 * @param node
+	 * @return True if [node] is within a radius of [player]
+	 */
 	public static boolean isNodeInRangeOfPlayer(Player player, Node node) {
 		float radius = 50 / AuberGame.PixelsPerMetre;
 
