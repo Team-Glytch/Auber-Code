@@ -4,7 +4,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.auber.entities.Player;
-import com.auber.gameplay.GameScreen;
+import com.auber.screens.GameScreen;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.physics.box2d.World;
 

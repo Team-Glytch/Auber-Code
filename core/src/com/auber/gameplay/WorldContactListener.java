@@ -4,6 +4,7 @@ import com.auber.entities.Enemy;
 import com.auber.entities.Player;
 import com.auber.entities.projectile.Projectile;
 import com.auber.rendering.Renderable;
+import com.auber.screens.GameScreen;
 import com.auber.tiles.InteractiveTileObject;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;

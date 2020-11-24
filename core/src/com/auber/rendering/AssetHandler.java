@@ -1,10 +1,14 @@
 package com.auber.rendering;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -47,13 +51,13 @@ public class AssetHandler {
 	 * @param mapsLocation
 	 */
 	public void loadAllMaps(String mapsLocation) {
-		File file = new File(mapsLocation);
+		FileHandle handle = Gdx.files.internal(mapsLocation);
 
 		TmxMapLoader mapLoader = new TmxMapLoader();
 
-		for (String childPath : file.list()) {
-			if (childPath.contains(".tmx")) {
-				mapMap.put(childPath.replace(".tmx", ""), mapLoader.load(mapsLocation + childPath));
+		for (FileHandle child : handle.list()) {
+			if (child.path().contains(".tmx")) {
+				mapMap.put(child.name().replace(".tmx", ""), mapLoader.load(child.path()));
 			}
 		}
 
@@ -66,11 +70,13 @@ public class AssetHandler {
 	 *                         stored
 	 */
 	public void loadAllTextures(String texturesLocation) {
-		File file = new File(texturesLocation);
+		FileHandle handle = Gdx.files.internal(texturesLocation);
 
-		for (String childPath : file.list()) {
-			if (childPath.contains(".png")) {
-				textureMap.put(childPath.replace(".png", ""), loadTexture(texturesLocation + childPath));
+		FileHandle[] directory = handle.list();
+
+		for (FileHandle child : directory) {
+			if (child.path().contains(".png")) {
+				textureMap.put(child.name().replace(".png", ""), loadTexture(child));
 			}
 		}
 
@@ -83,17 +89,17 @@ public class AssetHandler {
 	 * @param filePath The path of the file that contains the animation sequence
 	 * @return An array containing the singular frames of an animation
 	 */
-	private TextureRegion[] loadTexture(String filePath) {
-		Texture texture = new Texture(Gdx.files.internal(filePath));
+	private TextureRegion[] loadTexture(FileHandle file) {
+		Texture texture = new Texture(file);
 
 		TextureRegion region = new TextureRegion(texture);
 
-		int amountOfAnimationFrames = getAmountOfFrames(filePath);
+		int amountOfAnimationFrames = getAmountOfFrames(file);
 
 		if (amountOfAnimationFrames == 0) {
 			amountOfAnimationFrames = 1;
 		}
-		
+
 		TextureRegion[] animationTextures = region.split(region.getRegionWidth() / amountOfAnimationFrames,
 				region.getRegionHeight())[0];
 
@@ -106,10 +112,10 @@ public class AssetHandler {
 	 * @param filePath The location of the file containing the animation sequence
 	 * @return The amount of frames the animation consists of
 	 */
-	private int getAmountOfFrames(String filePath) {
+	private int getAmountOfFrames(FileHandle handle) {
 		int frameAmount = 0;
 
-		Pixmap map = new Pixmap(Gdx.files.internal(filePath));
+		Pixmap map = new Pixmap(handle);
 
 		boolean wasLastBlankLine = true;
 
@@ -158,5 +164,6 @@ public class AssetHandler {
 	public TiledMap getMap(String mapName) {
 		return mapMap.get(mapName);
 	}
+
 
 }
