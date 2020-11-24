@@ -8,6 +8,10 @@ import com.auber.entities.Player;
 
 public class InvisibleAbility implements SpecialAbility {
 
+	/**
+	 * The timestamp of when the cooldown of the ability will finish
+	 * Measured in milliseconds since the epoch
+	 */
 	long cooldown = 0;
 
 	@Override

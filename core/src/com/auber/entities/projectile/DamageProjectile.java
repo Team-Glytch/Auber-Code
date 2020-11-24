@@ -12,24 +12,28 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 
 public class DamageProjectile implements Renderable, Projectile {
+	
+	/**
+	 * The screen the projectile is fired on
+	 */
 	private GameScreen gameScreen;
+	/**
+	 * The location and bounding box of the projectile
+	 */
 	private Body box2dBody;
 
+	/**
+	 * Creates the projectile
+	 * 
+	 * @param screen
+	 * @param pos The position of the projectile
+	 * @param target Where the projectile is fired at
+	 */
 	public DamageProjectile(GameScreen screen, Vector2 pos, Vector2 target) {
 		this.gameScreen = screen;
 		defineEnemy(pos);
 		fire(target);
 		screen.addRenderable(this);
-	}
-
-	@Override
-	public void collide(final Player player) {
-		float dmg = 2.5f;
-
-		player.setHealth(player.getHealth() - dmg);
-
-		System.out.println(player.getHealth());
-		
 	}
 
 	private void fire(Vector2 target) {
@@ -46,6 +50,11 @@ public class DamageProjectile implements Renderable, Projectile {
 
 	}
 
+	/**
+	 * Defines the position and bounding box of the projectile
+	 * 
+	 * @param loc
+	 */
 	public void defineEnemy(Vector2 loc) {
 		// Position and type
 		BodyDef bodyDefinition = new BodyDef();
@@ -64,6 +73,16 @@ public class DamageProjectile implements Renderable, Projectile {
 		box2dBody.createFixture(fixtureDefinition);
 
 		box2dBody.setUserData(this);
+	}
+
+	@Override
+	public void collide(final Player player) {
+		float dmg = 2.5f;
+
+		player.setHealth(player.getHealth() - dmg);
+
+		System.out.println(player.getHealth());
+		
 	}
 
 	@Override

@@ -48,6 +48,10 @@ public class Node {
 		return gCost + hCost;
 	}
 
+	/**
+	 * @param position
+	 * @return The node closest to the position specified
+	 */
 	public static Node getNearestNode(Vector2 position) {
 		float newX = getGridCoord(position.x);
 		float newY = getGridCoord(position.y);
@@ -55,6 +59,10 @@ public class Node {
 		return new Node(new Vector2(newX, newY));
 	}
 
+	/**
+	 * @param coord
+	 * @return The transformed coordinate, mapped onto the grid of the game
+	 */
 	private static float getGridCoord(float coord) {
 		return (float) (Math.floor(coord * AuberGame.PixelsPerMetre / 16) * 16 - 8) / AuberGame.PixelsPerMetre;
 	}

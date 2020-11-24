@@ -79,9 +79,9 @@ public class InteractableHandler {
 			brigLocations.add(newNode);
 		}
 
-		RectangleMapObject infirmiryRect = map.getLayers().get("Infirmiry").getObjects()
+		RectangleMapObject infirmiryRect = map.getLayers().get("Infirmary").getObjects()
 				.getByType(RectangleMapObject.class).first();
-		new Infirmiry(world, infirmiryRect);
+		new Infirmary(world, infirmiryRect);
 		
 	}
 	

@@ -8,9 +8,9 @@ import com.auber.gameplay.GameScreen;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.physics.box2d.World;
 
-public class Infirmiry extends InteractiveTileObject {
+public class Infirmary extends InteractiveTileObject {
 
-	public Infirmiry(World world, MapObject object) {
+	public Infirmary(World world, MapObject object) {
 		super(world, object);
 	}
 

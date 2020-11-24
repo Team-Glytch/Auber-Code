@@ -8,10 +8,22 @@ import com.badlogic.gdx.math.Vector2;
 
 public class DamageProjectileAbility implements SpecialAbility {
 
+	/**
+	 * The timestamp of when the cooldown of the ability will finish
+	 * Measured in milliseconds since the epoch
+	 */
 	long cooldown = 0;
 
+	/**
+	 * The screen the ability is being used on
+	 */
 	GameScreen gameScreen;
 
+	/**
+	 * Creates the DamageProjectileAbility
+	 * 
+	 * @param screen
+	 */
 	public DamageProjectileAbility(GameScreen screen) {
 		this.gameScreen = screen;
 	}

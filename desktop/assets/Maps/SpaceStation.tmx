@@ -2340,7 +2340,7 @@
   <object id="2859" name="1" x="416" y="416" width="16" height="16"/>
   <object id="2860" name="3" x="1120" y="416" width="16" height="16"/>
  </objectgroup>
- <objectgroup color="#ffaaff" id="16" name="Infirmiry">
+ <objectgroup color="#ffaaff" id="16" name="Infirmary">
   <object id="2869" x="320" y="768" width="16" height="16"/>
  </objectgroup>
 </map>

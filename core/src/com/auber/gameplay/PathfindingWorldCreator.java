@@ -15,10 +15,8 @@ import com.badlogic.gdx.math.Vector2;
 
 public class PathfindingWorldCreator {
 
-	/**
-	 * The locations of the nodes within the map
-	 */
 	private List<Node> locations;
+	private ArrayList<ArrayList<Node>> locationBreakdown;
 
 	public PathfindingWorldCreator(TiledMap map) {
 		this.locations = new ArrayList<Node>();
@@ -33,19 +31,27 @@ public class PathfindingWorldCreator {
 		}
 
 		QuickSort.sort(locations);
+		float previousX = locations.get(0).getWorldPosition().x;
+		locationBreakdown = new ArrayList<ArrayList<Node>>();
+		ArrayList<Node> tempLocation = new ArrayList<Node>();
+
+		for (Node n : locations) {
+			if (n.getWorldPosition().x == previousX) {
+				tempLocation.add(n);
+			} else {
+				locationBreakdown.add(tempLocation);
+				tempLocation = new ArrayList<Node>();
+				tempLocation.add(n);
+				previousX = n.getWorldPosition().x;
+
+			}
+
+		}
+
+		locationBreakdown.add(tempLocation);
+
 	}
 
-	/**
-	 * @return {@link #locations}
-	 */
-	public List<Node> getLocations() {
-		return locations;
-	}
-
-	/**
-	 * @param node
-	 * @return A list of the neighbour nodes of [node]
-	 */
 	public ArrayList<Node> getNeighbours(Node node) {
 		ArrayList<Node> neighbours = new ArrayList<Node>();
 		for (int x = -1; x <= 1; x++) {
@@ -57,15 +63,16 @@ public class PathfindingWorldCreator {
 				float checkY = node.getWorldPosition().y + (y * 0.16f);
 				Vector2 checkV = new Vector2(checkX, checkY);
 				Node checkN = new Node(checkV);
-				int result = BinarySearch.search(locations, checkN);
-
-				if (result != -1) {
-					neighbours.add(locations.get(result));
+				int resultX = BinarySearch.search(locationBreakdown, checkN);
+				if (resultX != -1) {
+					int resultY = BinarySearch.searchY(locationBreakdown.get(resultX), checkN);
+					if (resultY != -1) {
+						neighbours.add(locationBreakdown.get(resultX).get(resultY));
+					}
 				}
 
 			}
 		}
 		return neighbours;
 	}
-
 }

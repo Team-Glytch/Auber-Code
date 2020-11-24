@@ -7,10 +7,23 @@ import com.auber.gameplay.GameScreen;
 import com.badlogic.gdx.math.Vector2;
 
 public class SlowAbility implements SpecialAbility {
-
-	private long cooldown;
-	private GameScreen gameScreen;
 	
+	/**
+	 * The timestamp of when the cooldown of the ability will finish
+	 * Measured in milliseconds since the epoch
+	 */
+	private long cooldown;
+	
+	/**
+	 * The screen the ability is being used on
+	 */
+	GameScreen gameScreen;
+
+	/**
+	 * Creates the SlowAbility
+	 * 
+	 * @param screen
+	 */
 	public SlowAbility(GameScreen screen) {
 		this.gameScreen = screen;
 	}
