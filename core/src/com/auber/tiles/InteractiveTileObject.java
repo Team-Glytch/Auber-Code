@@ -1,7 +1,9 @@
-package com.auber.gameplay;
+package com.auber.tiles;
 
 import com.auber.entities.Player;
 import com.auber.game.AuberGame;
+import com.auber.gameplay.GameScreen;
+import com.auber.gameplay.WorldContactListener;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;
@@ -37,8 +39,11 @@ public abstract class InteractiveTileObject {
 		shape.setAsBox(bounds.getWidth() / 2 / AuberGame.PixelsPerMetre,
 				bounds.getHeight() / 2 / AuberGame.PixelsPerMetre);
 		fdef.shape = shape;
+
 		fixture = body.createFixture(fdef);
 
+		setCategoryFilter(WorldContactListener.TILE_BIT);
+		fixture.setUserData(this);
 	}
 
 	public abstract void collide(GameScreen screen, Player player);

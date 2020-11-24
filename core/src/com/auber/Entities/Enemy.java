@@ -2,7 +2,10 @@ package com.auber.entities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
+import com.auber.entities.abilities.SpecialAbility;
 import com.auber.entities.behaviors.Node;
 import com.auber.entities.behaviors.Pathfinding;
 import com.auber.game.AuberGame;
@@ -32,29 +35,72 @@ public class Enemy implements Renderable {
 	 */
 	private ArrayList<Node> path;
 
+	/**
+	 * The ID of the location of the interactable being travelled to
+	 */
 	int destinationID;
 
+	/**
+	 * True if the enemy is visible to the player, False otherwise
+	 */
+	boolean isVisible = true;
+
+	/**
+	 * True if the player has killed the enemy, False otherwise
+	 */
 	boolean isDead = false;
+
+	/**
+	 * True if the enemy can move, False otherwise
+	 */
+	boolean canMove = true;
+
+	/**
+	 * The special ability the enemy can use
+	 */
+	private SpecialAbility ability;
+
+	/**
+	 * The ID of the enemy
+	 */
+	private int id;
 
 	/**
 	 * Constructs the Enemy
 	 * 
 	 * @param screen The game screen the enemy is in
 	 */
-	public Enemy(GameScreen screen, int index) {
+	public Enemy(GameScreen screen, SpecialAbility ability, int index) {
 		this.gameScreen = screen;
+		this.ability = ability;
+		this.id = index;
 
 		Node startLoc = gameScreen.getInteractables().getStartLocations().get(index + 1);
 		defineEnemy(startLoc);
+
+		path = new ArrayList<Node>();
 
 		setPath(startLoc, index);
 
 	}
 
+	/**
+	 * @return {@link #id}
+	 */
+	public int getID() {
+		return id;
+	}
+
+	/**
+	 * @return {@link #isDead}
+	 */
 	public boolean isDead() {
 		return isDead;
 	}
 
+	/**
+	 * Kills the enemy
+	 */
 	public void kill() {
 		this.isDead = true;
 		path.clear();
@@ -62,6 +108,33 @@ public class Enemy implements Renderable {
 
 	@Override
 	public void update(float deltaTime) {
+		if (!isDead) {
+			updateAbility();
+
+			if (canMove) {
+				updatePathing();
+			}
+		}
+	}
+
+	/**
+	 * Handles the special ability behaviour of the enemy
+	 */
+	private void updateAbility() {
+		if (ability != null) {
+			Player player = gameScreen.getPlayer();
+
+			if (MathsHelper.distanceBetween(box2dBody.getPosition(),
+					new Vector2(player.getX(), player.getY())) <= ability.getRange() / AuberGame.PixelsPerMetre) {
+				ability.doAction(this, player);
+			}
+		}
+	}
+
+	/**
+	 * Handles the pathing behaviour of the enemy
+	 */
+	private void updatePathing() {
 		checkCurrentPath();
 
 		if (!path.isEmpty()) {
@@ -75,7 +148,10 @@ public class Enemy implements Renderable {
 		}
 	}
 
-	public void checkCurrentPath() {
+	/**
+	 * Checks if the player has blocked the enemy's path
+	 */
+	private void checkCurrentPath() {
 		if (path != null && !path.isEmpty()) {
 			if (shouldRedoPath()) {
 				setPath(path.get(0), destinationID);
@@ -83,6 +159,10 @@ public class Enemy implements Renderable {
 		}
 	}
 
+	/**
+	 * @return True if the player is in range of the next 3 nodes infront of the
+	 *         player, False otherwise
+	 */
 	private boolean shouldRedoPath() {
 		for (int i = 0; i < 3 && i < path.size(); i++) {
 			if (Pathfinding.isNodeInRangeOfPlayer(gameScreen.getPlayer(), path.get(0))) {
@@ -105,7 +185,18 @@ public class Enemy implements Renderable {
 				&& MathsHelper.round(node.getWorldPosition().y, 2) == MathsHelper.round(box2dBody.getPosition().y, 2)) {
 			path.remove(0);
 			if (path.size() == 0) {
+				canMove = false;
+
 				setNewPath();
+
+				final Timer timer = new Timer();
+				timer.schedule(new TimerTask() {
+					@Override
+					public void run() {
+						canMove = true;
+						timer.cancel();
+					}
+				}, 3000);
 			}
 		} else {
 			// Checks if the enemy has reached the y coordinate of the node
@@ -151,7 +242,10 @@ public class Enemy implements Renderable {
 		return MathsHelper.round(node.getWorldPosition().y, 2) - MathsHelper.round(box2dBody.getPosition().y, 2) > 0;
 	}
 
-	public void setNewPath() {
+	/**
+	 * Sets a new path when the enemy has reached the interactable
+	 */
+	private void setNewPath() {
 		int startID = destinationID;
 		gameScreen.getRooms().breakInteractable(startID);
 
@@ -163,7 +257,10 @@ public class Enemy implements Renderable {
 			setPath(startID, operationalIDs.get(nextDest));
 		}
 	}
-
+	
+	/**
+	 * @return The ID of the closest operable interactable the enemy can reach
+	 */
 	private int getNextDestID() {
 		List<Integer> operationalIDs = gameScreen.getRooms().getOperationalIDs();
 
@@ -184,7 +281,13 @@ public class Enemy implements Renderable {
 		return nextDest;
 	}
 
-	public void setPath(Node fromNode, int end) {
+	/**
+	 * Sets a path from a node to an interactable
+	 * 
+	 * @param fromNode The node the enemy is standing on
+	 * @param end The ID of the interactable the enemy wants to go to
+	 */
+	private void setPath(Node fromNode, int end) {
 		List<Node> interactables = gameScreen.getInteractables().getLocations();
 		path = Pathfinding.findPath(fromNode, interactables.get(end), gameScreen.getPlayer(),
 				gameScreen.getPathfinder());
@@ -222,10 +325,28 @@ public class Enemy implements Renderable {
 		fixtureDefinition.shape = shape;
 		// Prevents enemies from colliding with each other
 		fixtureDefinition.filter.categoryBits = WorldContactListener.ENEMY_BIT;
-		fixtureDefinition.filter.maskBits = WorldContactListener.PLAYER_BIT;
+		fixtureDefinition.filter.maskBits = WorldContactListener.DEFAULT_BIT | WorldContactListener.PLAYER_BIT;
 		box2dBody.createFixture(fixtureDefinition);
 
 		box2dBody.setUserData(this);
+	}
+
+	/**
+	 * Teleports the enemy to a specified location
+	 * 
+	 * @param x
+	 * @param y
+	 */
+	public void teleport(final float x, final float y) {
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				while (gameScreen.getWorld().isLocked()) {
+				}
+				box2dBody.setTransform(x, y, 0);
+			}
+		}).start();
 	}
 
 	@Override
@@ -260,6 +381,15 @@ public class Enemy implements Renderable {
 	@Override
 	public boolean isMovingRight() {
 		return path.isEmpty() || isNodeToRightOfEnemy(path.get(0));
+	}
+
+	public void setVisible(boolean isVisible) {
+		this.isVisible = isVisible;
+	}
+
+	@Override
+	public boolean isVisible() {
+		return isVisible;
 	}
 
 }

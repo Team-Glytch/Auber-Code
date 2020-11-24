@@ -52,7 +52,7 @@ public class Renderer {
 	public AssetHandler getHandler() {
 		return handler;
 	}
-	
+
 	/**
 	 * @return {@link #currentScreen}
 	 */
@@ -94,22 +94,23 @@ public class Renderer {
 		currentScreen.updateCamera();
 
 		for (Renderable renderable : currentScreen.getRenderables()) {
-			float x = renderable.getX();
-			float y = renderable.getY();
-			float width = renderable.getWidth();
-			float height = renderable.getHeight();
+			if (renderable.isVisible()) {
+				float x = renderable.getX();
+				float y = renderable.getY();
+				float width = renderable.getWidth();
+				float height = renderable.getHeight();
 
-			TextureRegion texture = handler.getTexture(renderable.getTextureName());
-			
-			if (!renderable.isMovingRight()) {
-				texture.flip(true, false);
-			}
-			
-			batch.draw(texture, x - (width / 2), y - (height / 2), width,
-					height);
-			
-			if (!renderable.isMovingRight()) {
-				texture.flip(true, false);
+				TextureRegion texture = handler.getTexture(renderable.getTextureName());
+
+				if (!renderable.isMovingRight()) {
+					texture.flip(true, false);
+				}
+
+				batch.draw(texture, x - (width / 2), y - (height / 2), width, height);
+
+				if (!renderable.isMovingRight()) {
+					texture.flip(true, false);
+				}
 			}
 		}
 		batch.setProjectionMatrix(currentScreen.getCamera().combined);
@@ -124,13 +125,14 @@ public class Renderer {
 	public void setScreen(GameScreen screen) {
 		this.currentScreen = screen;
 		TiledMap map = handler.getMap(screen.getMapName());
-		
+
 		mapRenderer.setMap(map);
 		setupCollisionBoxes(screen.getWorld(), map);
 	}
 
 	/**
 	 * Sets up the collision boxes of the world
+	 * 
 	 * @param world
 	 * @param map
 	 */
@@ -154,7 +156,7 @@ public class Renderer {
 			body.createFixture(fixtureDefinition);
 		}
 	}
-	
+
 	/**
 	 * Disposes of the renderer's tools
 	 */

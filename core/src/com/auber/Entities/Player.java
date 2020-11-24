@@ -14,20 +14,66 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 
 public class Player implements Renderable {
 
+	/**
+	 * The screen the player is on
+	 */
 	private GameScreen gameScreen;
+	
 	/**
 	 * The box defining the player's position, and bounding box
 	 */
 	private Body box2dBody;
 
+	/**
+	 * The relative speed of the player, default is 1.0f
+	 */
 	private float speed;
 
+	/**
+	 * The health of the player, max is 10.0f
+	 */
+	private float health;
+	
 	/**
 	 * @param gameScreen.getWorld() The gameScreen.getWorld() the player is in
 	 */
 	public Player(GameScreen gameScreen) {
 		this.gameScreen = gameScreen;
 		this.box2dBody = definePlayer(gameScreen.getInteractables().getStartLocations().get(0).getWorldPosition());
+		this.speed = 1.0f;
+		this.health = 10f;
+	}
+
+	/**
+	 * Sets the health of the player
+	 * 
+	 * @param health
+	 */
+	public void setHealth(float health) {
+		this.health = health;
+	}
+	
+	/**
+	 * @return {@link #health}
+	 */
+	public float getHealth() {
+		return health;
+	}
+	
+	/**
+	 * Sets the relative speed of the player
+	 * 
+	 * @param speed
+	 */
+	public void setSpeed(float speed) {
+		this.speed = speed;
+	}
+
+	/**
+	 * @return {@link #speed}
+	 */
+	public float getSpeed() {
+		return speed;
 	}
 
 	/**
@@ -48,7 +94,8 @@ public class Player implements Renderable {
 		shape.setRadius(8 / AuberGame.PixelsPerMetre);
 		fixtureDefinition.shape = shape;
 		fixtureDefinition.filter.categoryBits = WorldContactListener.PLAYER_BIT;
-		fixtureDefinition.filter.maskBits = WorldContactListener.ENEMY_BIT | WorldContactListener.TELEPORTER_BIT;
+		fixtureDefinition.filter.maskBits = WorldContactListener.DEFAULT_BIT | WorldContactListener.ENEMY_BIT
+				| WorldContactListener.TILE_BIT | WorldContactListener.PROJECTILE_BIT;
 		box2dBody.createFixture(fixtureDefinition);
 
 		return box2dBody;
@@ -70,13 +117,15 @@ public class Player implements Renderable {
 		boolean moveRight = (Gdx.input.isKeyPressed(Input.Keys.RIGHT));
 		boolean moveLeft = (Gdx.input.isKeyPressed(Input.Keys.LEFT));
 
+		float movementSpeed = this.speed * 0.15f;
+
 		// Whether the player should move up
 		if (moveUp && this.box2dBody.getLinearVelocity().y < 0.7f && !moveDown) {
-			this.box2dBody.applyLinearImpulse(new Vector2(0f, 0.15f), this.box2dBody.getWorldCenter(), true);
+			this.box2dBody.applyLinearImpulse(new Vector2(0f, movementSpeed), this.box2dBody.getWorldCenter(), true);
 
 			// Whether the player should move down
 		} else if (moveDown && this.box2dBody.getLinearVelocity().y > -0.7f && !moveUp) {
-			this.box2dBody.applyLinearImpulse(new Vector2(0f, -0.15f), this.box2dBody.getWorldCenter(), true);
+			this.box2dBody.applyLinearImpulse(new Vector2(0f, -movementSpeed), this.box2dBody.getWorldCenter(), true);
 
 			// Whether the player's up and down motions cancel each other out
 		} else if (moveUp == moveDown) {
@@ -85,11 +134,11 @@ public class Player implements Renderable {
 
 		// Whether the player should move right
 		if (moveRight && this.box2dBody.getLinearVelocity().x < 0.7f && !moveLeft) {
-			this.box2dBody.applyLinearImpulse(new Vector2(0.15f, 0f), this.box2dBody.getWorldCenter(), true);
+			this.box2dBody.applyLinearImpulse(new Vector2(movementSpeed, 0f), this.box2dBody.getWorldCenter(), true);
 
 			// Whether the player should move left
 		} else if (moveLeft && this.box2dBody.getLinearVelocity().x > -0.7f && !moveRight) {
-			this.box2dBody.applyLinearImpulse(new Vector2(-0.15f, 0f), this.box2dBody.getWorldCenter(), true);
+			this.box2dBody.applyLinearImpulse(new Vector2(-movementSpeed, 0f), this.box2dBody.getWorldCenter(), true);
 
 			// Whether the player's left and right motions cancel each other out
 		} else if (moveRight == moveLeft) {
@@ -139,13 +188,18 @@ public class Player implements Renderable {
 
 	public void teleport(final float x, final float y) {
 		new Thread(new Runnable() {
-			
+
 			@Override
 			public void run() {
-				while(gameScreen.getWorld().isLocked()) {
+				while (gameScreen.getWorld().isLocked()) {
 				}
 				box2dBody.setTransform(x, y, 0);
 			}
 		}).start();
+	}
+
+	@Override
+	public boolean isVisible() {
+		return true;
 	}
 }

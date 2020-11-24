@@ -1,9 +1,10 @@
-package com.auber.gameplay;
+package com.auber.tiles;
 
 import java.util.List;
 
 import com.auber.entities.Player;
 import com.auber.entities.behaviors.Node;
+import com.auber.gameplay.GameScreen;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
@@ -17,7 +18,6 @@ public class Teleporter extends InteractiveTileObject {
 		super(world, object);
 
 		fixture.setUserData(this);
-		setCategoryFilter(WorldContactListener.TELEPORTER_BIT);
 		this.x = x;
 		this.y = y;
 	}

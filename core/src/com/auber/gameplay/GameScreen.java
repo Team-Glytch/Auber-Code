@@ -8,6 +8,7 @@ import com.auber.entities.Player;
 import com.auber.game.AuberGame;
 import com.auber.rendering.AssetHandler;
 import com.auber.rendering.Renderable;
+import com.auber.tiles.InteractableHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -48,7 +49,7 @@ public class GameScreen implements Screen {
 	private InteractableHandler interactables;
 
 	private Rooms rooms;
-	
+
 	public Rooms getRooms() {
 		return rooms;
 	}
@@ -57,18 +58,21 @@ public class GameScreen implements Screen {
 		if (playerIndex == -1) {
 			return null;
 		}
-		
+
 		return (Player) renderables.get(playerIndex);
 	}
-	
+
 	/**
 	 * The objects that are needed to be rendered
 	 */
 	private List<Renderable> renderables;
 
+	private List<Renderable> renderableBuffer;
+
 	public GameScreen(String mapName, AssetHandler handler) {
 		this.mapName = mapName;
 		this.renderables = new ArrayList<Renderable>();
+		this.renderableBuffer = new ArrayList<Renderable>();
 
 		this.world = new World(new Vector2(0, 0), true);
 		this.world.setContactListener(new WorldContactListener(this));
@@ -86,9 +90,9 @@ public class GameScreen implements Screen {
 		pathfinder = new PathfindingWorldCreator(map);
 	}
 
-	public boolean containsEnemies() {
+	private boolean areEnemiesAlive() {
 		for (Renderable r : renderables) {
-			if (r instanceof Enemy) {
+			if (r instanceof Enemy && !((Enemy) r).isDead()) {
 				return true;
 			}
 		}
@@ -118,17 +122,20 @@ public class GameScreen implements Screen {
 	}
 
 	public void update(float deltaTime) {
+		renderables.addAll(renderableBuffer);
+		renderableBuffer.clear();
+
 		for (Renderable renderable : renderables) {
 			renderable.update(deltaTime);
 		}
 
-		if (!containsEnemies()) {
+		if (!areEnemiesAlive()) {
 			System.out.println("YOU WIN");
 			Gdx.app.exit();
 		}
 
-		if (rooms.getOperationalIDs().size() == 0) {
-			System.out.println("GAME OVER");
+		if (rooms.getOperationalIDs().size() == 0 || getPlayer().getHealth() <= 0f) {
+			System.out.println("YOU LOSE");
 			Gdx.app.exit();
 		}
 	}
@@ -153,7 +160,7 @@ public class GameScreen implements Screen {
 	 * @param renderable
 	 */
 	public void addRenderable(Renderable renderable) {
-		this.renderables.add(renderable);
+		this.renderableBuffer.add(renderable);
 	}
 
 	/**

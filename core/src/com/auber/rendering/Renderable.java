@@ -31,5 +31,7 @@ public interface Renderable {
 	public void update(float deltaTime);
 	
 	public boolean isMovingRight();
+
+	public boolean isVisible();
 	
 }

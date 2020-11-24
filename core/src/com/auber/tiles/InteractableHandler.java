@@ -1,8 +1,9 @@
-package com.auber.gameplay;
+package com.auber.tiles;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.auber.entities.Enemy;
 import com.auber.entities.behaviors.Node;
 import com.auber.game.AuberGame;
 import com.badlogic.gdx.maps.MapObject;
@@ -21,6 +22,8 @@ public class InteractableHandler {
 	private ArrayList<Node> locations;
 
 	private ArrayList<Node> startLocations;
+	
+	private ArrayList<Node> brigLocations;
 
 	private ArrayList<Teleporter> teleporters;
 
@@ -66,6 +69,27 @@ public class InteractableHandler {
 			Teleporter teleporter = new Teleporter(world, object, vPosition.x, vPosition.y);
 			teleporters.set(index, teleporter);
 		}
+		
+		this.brigLocations = new ArrayList<Node>();
+		for (MapObject object : map.getLayers().get("Brig").getObjects()
+				.getByType(RectangleMapObject.class)) {
+			Rectangle rect = ((RectangleMapObject) object).getRectangle();
+			Vector2 vPosition = getPosition(rect);
+			Node newNode = new Node(vPosition);
+			brigLocations.add(newNode);
+		}
+
+		RectangleMapObject infirmiryRect = map.getLayers().get("Infirmiry").getObjects()
+				.getByType(RectangleMapObject.class).first();
+		new Infirmiry(world, infirmiryRect);
+		
+	}
+	
+	public void jail(Enemy enemy) {
+		Vector2 loc = brigLocations.get(enemy.getID()).getWorldPosition();
+		
+		enemy.teleport(loc.x, loc.y);
+		enemy.kill();
 	}
 
 	private Vector2 getPosition(Rectangle rect) {
