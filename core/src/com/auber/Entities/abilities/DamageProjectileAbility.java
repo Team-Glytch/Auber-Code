@@ -1,8 +1,8 @@
-package com.auber.Entities.abilities;
+package com.auber.entities.abilities;
 
-import com.auber.Entities.Enemy;
-import com.auber.Entities.Player;
-import com.auber.Entities.projectile.DamageProjectile;
+import com.auber.entities.Enemy;
+import com.auber.entities.Player;
+import com.auber.entities.projectile.DamageProjectile;
 import com.auber.gameplay.GameScreen;
 import com.badlogic.gdx.math.Vector2;
 

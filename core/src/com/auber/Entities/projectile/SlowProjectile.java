@@ -1,9 +1,9 @@
-package com.auber.Entities.projectile;
+package com.auber.entities.projectile;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.auber.Entities.Player;
+import com.auber.entities.Player;
 import com.auber.game.AuberGame;
 import com.auber.gameplay.GameScreen;
 import com.auber.gameplay.WorldContactListener;

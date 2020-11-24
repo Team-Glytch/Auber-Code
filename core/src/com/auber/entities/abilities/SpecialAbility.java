@@ -1,7 +1,7 @@
-package com.auber.entities.abilities;
+package com.auber.Entities.abilities;
 
-import com.auber.entities.Enemy;
-import com.auber.entities.Player;
+import com.auber.Entities.Enemy;
+import com.auber.Entities.Player;
 
 public interface SpecialAbility {
 

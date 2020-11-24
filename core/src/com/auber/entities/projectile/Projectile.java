@@ -1,6 +1,6 @@
-package com.auber.entities.projectile;
+package com.auber.Entities.projectile;
 
-import com.auber.entities.Player;
+import com.auber.Entities.Player;
 import com.badlogic.gdx.math.Vector2;
 
 public interface Projectile {
