@@ -3,16 +3,19 @@ package com.auber.game;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.auber.entities.Enemy;
-import com.auber.entities.Player;
-import com.auber.entities.abilities.DamageProjectileAbility;
-import com.auber.entities.abilities.InvisibleAbility;
-import com.auber.entities.abilities.SlowAbility;
-import com.auber.entities.abilities.SpecialAbility;
+import com.auber.Entities.Enemy;
+import com.auber.Entities.Player;
+import com.auber.Entities.abilities.DamageProjectileAbility;
+import com.auber.Entities.abilities.InvisibleAbility;
+import com.auber.Entities.abilities.SlowAbility;
+import com.auber.Entities.abilities.SpecialAbility;
 import com.auber.gameplay.GameScreen;
+import com.auber.rendering.MenuCamera;
 import com.auber.rendering.Renderer;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 
 public class AuberGame extends Game {
 	/**
@@ -32,6 +35,9 @@ public class AuberGame extends Game {
 	 * Height of the screen
 	 */
 	public static final float V_HEIGHT = 720;
+	
+	public SpriteBatch batch;
+	public MenuCamera cam;
 
 	/**
 	 * Initialise world

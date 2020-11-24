@@ -1,18 +1,18 @@
-package com.auber.entities;
+package com.auber.Entities;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.auber.entities.abilities.SpecialAbility;
-import com.auber.entities.behaviors.Node;
-import com.auber.entities.behaviors.Pathfinding;
+import com.auber.Entities.abilities.SpecialAbility;
+import com.auber.Entities.Behaviors.Node;
+import com.auber.Entities.Behaviors.Pathfinding;
 import com.auber.game.AuberGame;
 import com.auber.gameplay.GameScreen;
 import com.auber.gameplay.WorldContactListener;
 import com.auber.rendering.Renderable;
-import com.auber.tools.MathsHelper;
+import com.auber.Tools.MathsHelper;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;

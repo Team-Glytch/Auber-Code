@@ -1,8 +1,8 @@
 package com.auber.gameplay;
 
-import com.auber.entities.Enemy;
-import com.auber.entities.Player;
-import com.auber.entities.projectile.Projectile;
+import com.auber.Entities.Enemy;
+import com.auber.Entities.Player;
+import com.auber.Entities.projectile.Projectile;
 import com.auber.rendering.Renderable;
 import com.auber.tiles.InteractiveTileObject;
 import com.badlogic.gdx.physics.box2d.Contact;

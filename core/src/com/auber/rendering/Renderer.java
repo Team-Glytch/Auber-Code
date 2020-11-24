@@ -47,6 +47,7 @@ public class Renderer {
 		batch = new SpriteBatch();
 		handler = new AssetHandler();
 		mapRenderer = new OrthogonalTiledMapRenderer(null, 1 / AuberGame.PixelsPerMetre);
+		
 	}
 
 	/**
@@ -118,6 +119,7 @@ public class Renderer {
 		}
 		batch.setProjectionMatrix(currentScreen.getCamera().combined);
 		batch.end();
+		
 	}
 
 	/**

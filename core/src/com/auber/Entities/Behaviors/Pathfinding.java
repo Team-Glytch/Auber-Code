@@ -1,13 +1,13 @@
-package com.auber.entities.behaviors;
+package com.auber.Entities.Behaviors;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 
-import com.auber.entities.Player;
+import com.auber.Entities.Player;
 import com.auber.game.AuberGame;
 import com.auber.gameplay.PathfindingWorldCreator;
-import com.auber.tools.MathsHelper;
+import com.auber.Tools.MathsHelper;
 import com.badlogic.gdx.math.Vector2;
 
 public class Pathfinding {

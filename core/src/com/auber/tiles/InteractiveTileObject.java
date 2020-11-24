@@ -1,6 +1,6 @@
 package com.auber.tiles;
 
-import com.auber.entities.Player;
+import com.auber.Entities.Player;
 import com.auber.game.AuberGame;
 import com.auber.gameplay.GameScreen;
 import com.auber.gameplay.WorldContactListener;

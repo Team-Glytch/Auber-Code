@@ -1,4 +1,4 @@
-package com.auber.entities;
+package com.auber.Entities;
 
 import com.auber.game.AuberGame;
 import com.auber.gameplay.GameScreen;
@@ -35,6 +35,11 @@ public class Player implements Renderable {
 	private float health;
 	
 	/**
+	 * Controls the direction which the player is facing
+	 */
+	private boolean movingRight;
+	
+	/**
 	 * @param gameScreen.getWorld() The gameScreen.getWorld() the player is in
 	 */
 	public Player(GameScreen gameScreen) {
@@ -42,6 +47,9 @@ public class Player implements Renderable {
 		this.box2dBody = definePlayer(gameScreen.getInteractables().getStartLocations().get(0).getWorldPosition());
 		this.speed = 1.0f;
 		this.health = 10f;
+		this.movingRight = true;
+		
+		
 	}
 
 	/**
@@ -135,10 +143,12 @@ public class Player implements Renderable {
 		// Whether the player should move right
 		if (moveRight && this.box2dBody.getLinearVelocity().x < 0.7f && !moveLeft) {
 			this.box2dBody.applyLinearImpulse(new Vector2(movementSpeed, 0f), this.box2dBody.getWorldCenter(), true);
+			movingRight = true;
 
 			// Whether the player should move left
 		} else if (moveLeft && this.box2dBody.getLinearVelocity().x > -0.7f && !moveRight) {
 			this.box2dBody.applyLinearImpulse(new Vector2(-movementSpeed, 0f), this.box2dBody.getWorldCenter(), true);
+			movingRight = false;
 
 			// Whether the player's left and right motions cancel each other out
 		} else if (moveRight == moveLeft) {
@@ -168,7 +178,7 @@ public class Player implements Renderable {
 
 	@Override
 	public float getHeight() {
-		return (20f / AuberGame.PixelsPerMetre);
+		return (30f / AuberGame.PixelsPerMetre);
 	}
 
 	@Override
@@ -183,7 +193,7 @@ public class Player implements Renderable {
 
 	@Override
 	public boolean isMovingRight() {
-		return !isMoving() || box2dBody.getLinearVelocity().x >= 0;
+		return movingRight;
 	}
 
 	public void teleport(final float x, final float y) {

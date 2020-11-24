@@ -1,4 +1,4 @@
-package com.auber.entities.behaviors;
+package com.auber.Entities.Behaviors;
 
 import com.auber.game.AuberGame;
 import com.badlogic.gdx.math.Vector2;

@@ -1,9 +1,9 @@
-package com.auber.tools;
+package com.auber.Tools;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.auber.entities.behaviors.Node;
+import com.auber.Entities.Behaviors.Node;
 
 public class BinarySearch {
 
