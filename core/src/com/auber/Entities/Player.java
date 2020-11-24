@@ -1,9 +1,9 @@
 package com.auber.entities;
 
 import com.auber.game.AuberGame;
-import com.auber.gameplay.GameScreen;
 import com.auber.gameplay.WorldContactListener;
 import com.auber.rendering.Renderable;
+import com.auber.screens.GameScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
@@ -99,7 +99,7 @@ public class Player implements Renderable {
 		// Collision
 		FixtureDef fixtureDefinition = new FixtureDef();
 		CircleShape shape = new CircleShape();
-		shape.setRadius(8 / AuberGame.PixelsPerMetre);
+		shape.setRadius(6 / AuberGame.PixelsPerMetre);
 		fixtureDefinition.shape = shape;
 		fixtureDefinition.filter.categoryBits = WorldContactListener.PLAYER_BIT;
 		fixtureDefinition.filter.maskBits = WorldContactListener.DEFAULT_BIT | WorldContactListener.ENEMY_BIT
