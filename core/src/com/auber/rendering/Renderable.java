@@ -30,6 +30,14 @@ public interface Renderable {
 	 */
 	public void update(float deltaTime);
 	
+	/**
+	 * @return True if the renderable is moving right, False otherwise
+	 */
 	public boolean isMovingRight();
+
+	/**
+	 * @return True if the renderable is visible, False otherwise
+	 */
+	public boolean isVisible();
 	
 }

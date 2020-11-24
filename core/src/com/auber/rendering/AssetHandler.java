@@ -90,6 +90,10 @@ public class AssetHandler {
 
 		int amountOfAnimationFrames = getAmountOfFrames(filePath);
 
+		if (amountOfAnimationFrames == 0) {
+			amountOfAnimationFrames = 1;
+		}
+		
 		TextureRegion[] animationTextures = region.split(region.getRegionWidth() / amountOfAnimationFrames,
 				region.getRegionHeight())[0];
 

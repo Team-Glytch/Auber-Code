@@ -1,8 +1,15 @@
 package com.auber.game;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.auber.entities.Enemy;
 import com.auber.entities.Player;
-import com.auber.rendering.GameScreen;
+import com.auber.entities.abilities.DamageProjectileAbility;
+import com.auber.entities.abilities.InvisibleAbility;
+import com.auber.entities.abilities.SlowAbility;
+import com.auber.entities.abilities.SpecialAbility;
+import com.auber.gameplay.GameScreen;
 import com.auber.rendering.Renderer;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -14,7 +21,7 @@ public class AuberGame extends Game {
 	private Renderer renderer;
 
 	/**
-	 * How many pixels there are per metre 
+	 * How many pixels there are per metre
 	 */
 	public static final float PixelsPerMetre = 100;
 	/**
@@ -31,18 +38,39 @@ public class AuberGame extends Game {
 	 */
 	@Override
 	public void create() {
-
 		renderer = new Renderer();
 		renderer.addTextures("assets/Sprites/");
 		renderer.addMaps("assets/Maps/");
 
 		GameScreen mainScreen = new GameScreen("SpaceStation", renderer.getHandler());
 
-		Enemy enemy = new Enemy(mainScreen);
-		mainScreen.addRenderable(enemy);
-
-		Player player = new Player(mainScreen.getWorld());
+		Player player = new Player(mainScreen);
 		mainScreen.setFocusedRenderable(player);
+
+		List<Enemy> enemyList = new ArrayList<Enemy>();
+
+		for (int i = 0; i < 8; i++) {
+			SpecialAbility ability = null;
+
+			switch (i % 3) {
+			case 0:
+				ability = new InvisibleAbility();
+				break;
+			case 1:
+				ability = new SlowAbility(mainScreen);
+				break;
+			case 2:
+				ability = new DamageProjectileAbility(mainScreen);
+				break;
+			default:
+				break;
+			}
+			
+			Enemy enemy = new Enemy(mainScreen, ability, i);
+			enemyList.add(enemy);
+			mainScreen.addRenderable(enemy);
+		}
+
 		renderer.setScreen(mainScreen);
 	}
 

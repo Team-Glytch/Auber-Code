@@ -1,6 +1,8 @@
 package com.auber.entities;
 
 import com.auber.game.AuberGame;
+import com.auber.gameplay.GameScreen;
+import com.auber.gameplay.WorldContactListener;
 import com.auber.rendering.Renderable;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -9,44 +11,91 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.World;
 
 public class Player implements Renderable {
 
 	/**
-	 * The world the player is in
+	 * The screen the player is on
 	 */
-	private World world;
+	private GameScreen gameScreen;
+	
 	/**
 	 * The box defining the player's position, and bounding box
 	 */
-	public Body box2dBody;
+	private Body box2dBody;
 
 	/**
-	 * @param world The world the player is in
+	 * The relative speed of the player, default is 1.0f
 	 */
-	public Player(World world) {
-		this.world = world;
-		this.box2dBody = definePlayer();
+	private float speed;
+
+	/**
+	 * The health of the player, max is 10.0f
+	 */
+	private float health;
+	
+	/**
+	 * @param gameScreen.getWorld() The gameScreen.getWorld() the player is in
+	 */
+	public Player(GameScreen gameScreen) {
+		this.gameScreen = gameScreen;
+		this.box2dBody = definePlayer(gameScreen.getInteractables().getStartLocations().get(0).getWorldPosition());
+		this.speed = 1.0f;
+		this.health = 10f;
+	}
+
+	/**
+	 * Sets the health of the player
+	 * 
+	 * @param health
+	 */
+	public void setHealth(float health) {
+		this.health = health;
+	}
+	
+	/**
+	 * @return {@link #health}
+	 */
+	public float getHealth() {
+		return health;
+	}
+	
+	/**
+	 * Sets the relative speed of the player
+	 * 
+	 * @param speed
+	 */
+	public void setSpeed(float speed) {
+		this.speed = speed;
+	}
+
+	/**
+	 * @return {@link #speed}
+	 */
+	public float getSpeed() {
+		return speed;
 	}
 
 	/**
 	 * @return The box defining the shape and position of the player
 	 */
-	private Body definePlayer() {
+	private Body definePlayer(Vector2 loc) {
+
 		// Position and Type
 		BodyDef bodyDefinition = new BodyDef();
-		bodyDefinition.position.set(780 / AuberGame.PixelsPerMetre, 1250 / AuberGame.PixelsPerMetre);
+		bodyDefinition.position.set(loc.x, loc.y);
 		bodyDefinition.type = BodyDef.BodyType.DynamicBody;
+		Body box2dBody = gameScreen.getWorld().createBody(bodyDefinition);
+		box2dBody.setUserData(this);
 
 		// Collision
-		Body box2dBody = world.createBody(bodyDefinition);
 		FixtureDef fixtureDefinition = new FixtureDef();
 		CircleShape shape = new CircleShape();
-		shape.setRadius(5 / AuberGame.PixelsPerMetre);
-
+		shape.setRadius(8 / AuberGame.PixelsPerMetre);
 		fixtureDefinition.shape = shape;
-
+		fixtureDefinition.filter.categoryBits = WorldContactListener.PLAYER_BIT;
+		fixtureDefinition.filter.maskBits = WorldContactListener.DEFAULT_BIT | WorldContactListener.ENEMY_BIT
+				| WorldContactListener.TILE_BIT | WorldContactListener.PROJECTILE_BIT;
 		box2dBody.createFixture(fixtureDefinition);
 
 		return box2dBody;
@@ -68,28 +117,30 @@ public class Player implements Renderable {
 		boolean moveRight = (Gdx.input.isKeyPressed(Input.Keys.RIGHT));
 		boolean moveLeft = (Gdx.input.isKeyPressed(Input.Keys.LEFT));
 
+		float movementSpeed = this.speed * 0.15f;
+
 		// Whether the player should move up
 		if (moveUp && this.box2dBody.getLinearVelocity().y < 0.7f && !moveDown) {
-			this.box2dBody.applyLinearImpulse(new Vector2(0f, 0.15f), this.box2dBody.getWorldCenter(), true);
-			
-		// Whether the player should move down
+			this.box2dBody.applyLinearImpulse(new Vector2(0f, movementSpeed), this.box2dBody.getWorldCenter(), true);
+
+			// Whether the player should move down
 		} else if (moveDown && this.box2dBody.getLinearVelocity().y > -0.7f && !moveUp) {
-			this.box2dBody.applyLinearImpulse(new Vector2(0f, -0.15f), this.box2dBody.getWorldCenter(), true);
-			
-		// Whether the player's up and down motions cancel each other out
+			this.box2dBody.applyLinearImpulse(new Vector2(0f, -movementSpeed), this.box2dBody.getWorldCenter(), true);
+
+			// Whether the player's up and down motions cancel each other out
 		} else if (moveUp == moveDown) {
 			this.box2dBody.setLinearVelocity(this.box2dBody.getLinearVelocity().x, 0f);
 		}
 
 		// Whether the player should move right
 		if (moveRight && this.box2dBody.getLinearVelocity().x < 0.7f && !moveLeft) {
-			this.box2dBody.applyLinearImpulse(new Vector2(0.15f, 0f), this.box2dBody.getWorldCenter(), true);
-			
-		// Whether the player should move left
+			this.box2dBody.applyLinearImpulse(new Vector2(movementSpeed, 0f), this.box2dBody.getWorldCenter(), true);
+
+			// Whether the player should move left
 		} else if (moveLeft && this.box2dBody.getLinearVelocity().x > -0.7f && !moveRight) {
-			this.box2dBody.applyLinearImpulse(new Vector2(-0.15f, 0f), this.box2dBody.getWorldCenter(), true);
-			
-		// Whether the player's left and right motions cancel each other out
+			this.box2dBody.applyLinearImpulse(new Vector2(-movementSpeed, 0f), this.box2dBody.getWorldCenter(), true);
+
+			// Whether the player's left and right motions cancel each other out
 		} else if (moveRight == moveLeft) {
 			this.box2dBody.setLinearVelocity(0f, this.box2dBody.getLinearVelocity().y);
 		}
@@ -133,5 +184,22 @@ public class Player implements Renderable {
 	@Override
 	public boolean isMovingRight() {
 		return !isMoving() || box2dBody.getLinearVelocity().x >= 0;
+	}
+
+	public void teleport(final float x, final float y) {
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				while (gameScreen.getWorld().isLocked()) {
+				}
+				box2dBody.setTransform(x, y, 0);
+			}
+		}).start();
+	}
+
+	@Override
+	public boolean isVisible() {
+		return true;
 	}
 }
